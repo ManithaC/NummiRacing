@@ -1,0 +1,31 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="200" fill="#000000"/>
+  
+  <!-- Checkered Flag Pattern (upper right) -->
+  <g transform="translate(280, 20)">
+    <!-- Row 1 -->
+    <rect x="0" y="0" width="20" height="20" fill="#7A9292"/>
+    <rect x="20" y="0" width="20" height="20" fill="#2c2c2c"/>
+    <rect x="40" y="0" width="20" height="20" fill="#7A9292"/>
+    
+    <!-- Row 2 -->
+    <rect x="0" y="20" width="20" height="20" fill="#2c2c2c"/>
+    <rect x="20" y="20" width="20" height="20" fill="#7A9292"/>
+    <rect x="40" y="20" width="20" height="20" fill="#2c2c2c"/>
+    
+    <!-- Row 3 -->
+    <rect x="0" y="40" width="20" height="20" fill="#7A9292"/>
+    <rect x="20" y="40" width="20" height="20" fill="#2c2c2c"/>
+    <!-- Missing square for dynamic edge -->
+  </g>
+  
+  <!-- nummi text -->
+  <text x="50" y="80" font-family="VAG Rounded, Arial, sans-serif" font-size="48" font-weight="bold" fill="#7A9292">nummi</text>
+  
+  <!-- RACING text -->
+  <text x="70" y="130" font-family="VAG Rounded, Arial, sans-serif" font-size="36" font-weight="bold">
+    <tspan fill="#B3402D">R</tspan>
+    <tspan fill="#2c2c2c">ACING</tspan>
+  </text>
+</svg>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nummi Racing - Professional Racing Team</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/vag-rounded" rel="stylesheet">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-text">Welcome to</h1>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+                    <div class="nav-logo">
+            <img src="images/nummi.png" alt="Nummi Racing" class="nav-logo-img">
+        </div>
+            <div class="nav-menu" id="nav-menu">
+                            <a href="#home" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#drivers" class="nav-link">Drivers</a>
+            <a href="#crew" class="nav-link">Crew</a>
+            <a href="#car" class="nav-link">The Car</a>
+            <a href="#schedule" class="nav-link">Schedule</a>
+            <a href="#contact" class="nav-link">Connect</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+                    <img src="images/nummi.png" alt="Nummi Racing" class="hero-logo">
+        </div>
+        <div class="hero-background"></div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section id="countdown" class="countdown-section">
+        <div class="container">
+            <h2>Upcoming Races</h2>
+            <div class="countdown-container">
+                <!-- Race 1 Countdown -->
+                <div class="countdown-race" id="countdown-race1">
+                    <div class="race-details">
+                        <h3>Enduro Elite Race 8</h3>
+                        <p>Shannonville Motorsports Park</p>
+                        <p>September 26, 2025 at 1:00 PM</p>
+                    </div>
+                    <div class="countdown-timer">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days1">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours1">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes1">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds1">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Race 2 Countdown -->
+                <div class="countdown-race" id="countdown-race2">
+                    <div class="race-details">
+                        <h3>NASA 25hrs of Ozarks</h3>
+                        <p>Ozarks International Raceway</p>
+                        <p>November 15, 2025 at 12:00 PM</p>
+                    </div>
+                    <div class="countdown-timer">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days2">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours2">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes2">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds2">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>Who Are We</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>IDK, Vinh is writing this part</p>
+                </div>
+                <div class="about-image">
+                    <img src="images/team-photo.jpg" alt="Nummi Racing Team" id="team-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Drivers Section -->
+    <section id="drivers" class="drivers-section">
+        <div class="container">
+            <h2>Our Drivers</h2>
+            <div class="drivers-grid" id="drivers-grid">
+                <!-- Drivers will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Crew Section -->
+    <section id="crew" class="crew-section">
+        <div class="container">
+            <h2>Our Crew</h2>
+            <div class="crew-grid" id="crew-grid">
+                <!-- Crew will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- The Car Section -->
+    <section id="car" class="car-section">
+        <div class="container">
+            <h2>The Car</h2>
+            <div class="car-content">
+                <div class="car-details">
+                    <h3>2013 Scion FRS</h3>
+                    <div class="car-specs">
+                                            <div class="spec-item">
+                        <span class="spec-label">Engine:</span>
+                        <span class="spec-value">FA24</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">ECU:</span>
+                        <span class="spec-value">LINK ECU G5</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Wheels:</span>
+                        <span class="spec-value">17x9 Enkei RPF1 +35</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Tires:</span>
+                        <span class="spec-value">Continental Extremecontact Force 255/45R17</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Brakes:</span>
+                        <span class="spec-value">AP Racing</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Oil Pan:</span>
+                        <span class="spec-value">Formula Delta</span>
+                    </div>
+                    </div>
+    
+                </div>
+                <div class="car-gallery">
+                    <img src="images/car-main.jpg" alt="Nummi Racing Toyota 86" id="car-main-image">
+                    <div class="car-thumbnails" id="car-thumbnails">
+                        <!-- Car thumbnails will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="schedule-section">
+        <div class="container">
+            <h2>Race Schedule</h2>
+            <div class="schedule-content">
+                <div class="upcoming-races">
+                    <h3>Upcoming Races</h3>
+                    <div class="races-list" id="upcoming-races">
+                        <!-- Upcoming races will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="previous-results">
+                    <h3>Previous Results</h3>
+                    <div class="results-list" id="previous-results">
+                        <!-- Previous results will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section" style="display: none;">
+        <div class="container">
+            <h2>Race Gallery</h2>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All Races</button>
+                <button class="filter-btn" data-filter="race1">Race 1</button>
+                <button class="filter-btn" data-filter="race2">Race 2</button>
+                <button class="filter-btn" data-filter="race3">Race 3</button>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Gallery images will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Sponsors Section -->
+    <section id="sponsors" class="sponsors-section" style="display: none;">
+        <div class="container">
+            <h2>Our Sponsors</h2>
+            <div class="sponsors-grid" id="sponsors-grid">
+                <!-- Sponsors will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Connect</h2>
+            <div class="connect-buttons">
+                <a href="https://www.facebook.com/nummi.racing/" class="connect-btn facebook-btn" target="_blank" rel="noopener">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.instagram.com/nummi_racing/#" class="connect-btn instagram-btn" target="_blank" rel="noopener">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.youtube.com/@NUMMIRacing" class="connect-btn youtube-btn" target="_blank" rel="noopener">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="mailto:nummi.racing45@gmail.com" class="connect-btn email-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Us</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle" id="dark-mode-toggle">
+        <i class="fas fa-moon" id="dark-mode-icon"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

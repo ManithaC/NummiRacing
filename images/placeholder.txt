@@ -1,0 +1,20 @@
+This is a placeholder file for the images directory.
+
+To complete your racing team website, you'll need to add the following images:
+
+1. hero-bg.jpg - Hero section background (1920x1080px recommended)
+2. team-photo.jpg - Team photo for About section (800x600px recommended)
+3. driver1.jpg, driver2.jpg - Driver photos (400x400px square recommended)
+4. crew1.jpg, crew2.jpg - Crew photos (400x400px square recommended)
+5. car-main.jpg - Main car photo (800x600px recommended)
+6. gallery1.jpg, gallery2.jpg - Gallery images (800x600px recommended)
+7. merch1.jpg, merch2.jpg - Merchandise images (400x300px recommended)
+8. sponsor1.jpg, sponsor2.jpg - Sponsor logos (200x200px recommended)
+
+Image Guidelines:
+- Use JPG format for photos, PNG for logos
+- Keep file sizes under 500KB for fast loading
+- Use descriptive filenames
+- Ensure high quality but optimized for web
+
+You can delete this file after adding your images.
