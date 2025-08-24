@@ -70,7 +70,7 @@ function loadDefaultData() {
                 id: 1,
                 name: "Vinh Pham",
                 role: "Driver",
-                image: "images/vinh.jpg",
+                image: "images/Vinh.jpg",
                 bio: "Racing enthusiast with a passion for precision driving and team coordination.",
                 instagram: "vphamracing"
             },
@@ -94,7 +94,7 @@ function loadDefaultData() {
                 id: 4,
                 name: "Nick Maitland",
                 role: "Driver",
-                image: "images/nick.jpg",
+                image: "images/Nick.jpg",
                 bio: "Competitive driver with strong analytical skills and race strategy.",
                 instagram: "heavymanufacturing"
             },
@@ -102,7 +102,7 @@ function loadDefaultData() {
                 id: 5,
                 name: "Jason Li",
                 role: "Guest Driver",
-                image: "images/jason.jpg",
+                image: "images/Jason.jpg",
                 bio: "Guest driver contributing fresh perspectives and racing experience.",
                 instagram: "driven.by.jay"
             },
@@ -110,7 +110,7 @@ function loadDefaultData() {
                 id: 6,
                 name: "Paul Joakim",
                 role: "Guest Driver", 
-                image: "images/paul.jpg",
+                image: "images/Paul.jpg",
                 bio: "Visiting driver sharing knowledge and expanding team capabilities.",
                 instagram: "paul_joakim"
             }
@@ -120,7 +120,7 @@ function loadDefaultData() {
                 id: 1,
                 name: "Adam Mann",
                 role: "Chief Mechanic",
-                image: "images/adam.jpg",
+                image: "images/Adam.jpg",
                 bio: "Lead mechanic ensuring peak vehicle performance and reliability.",
                 instagram: "mann.motorsport"
             },
@@ -128,7 +128,7 @@ function loadDefaultData() {
                 id: 2,
                 name: "Joseph Yang",
                 role: "Data Analyst",
-                image: "images/joseph.jpg",
+                image: "images/Joseph.jpg",
                 bio: "Performance analyst optimizing race strategy through data insights.",
                 instagram: "jsph.yang"
             },
@@ -136,7 +136,7 @@ function loadDefaultData() {
                 id: 3,
                 name: "Luke Pham",
                 role: "Crew",
-                image: "images/luke.jpg",
+                image: "images/Luke.jpg",
                 bio: "Essential crew member supporting all team operations and logistics.",
                 instagram: "lukephamracing"
             },
@@ -144,7 +144,7 @@ function loadDefaultData() {
                 id: 4,
                 name: "Manitha Chandrasena",
                 role: "Intern",
-                image: "images/manitha.jpg",
+                image: "images/Manitha.jpg",
                 bio: "Learning the ropes and contributing to team success through dedication.",
                 instagram: "manitha_c"
             }
