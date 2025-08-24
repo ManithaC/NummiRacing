@@ -619,7 +619,7 @@ function renderDrivers() {
     if (!driversGrid) return;
     
     driversGrid.innerHTML = websiteData.drivers.map(driver => `
-        <div class="driver-card fade-in">
+        <div class="driver-card fade-in" data-driver="${driver.name.toLowerCase()}">
             <div class="flip-card">
                 <div class="flip-card-front">
                     <img src="${driver.image}" alt="${driver.name}" class="driver-image" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2218%22>No Image</text></svg>';">
@@ -630,7 +630,7 @@ function renderDrivers() {
                 </div>
                 <div class="flip-card-back">
                     <div class="back-top-content">
-                        <img src="${driver.image}" alt="${driver.name}" class="driver-image-small" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>No Image</text></svg>';">
+                        <img src="${driver.image}" alt="${driver.name}" class="driver-image-small" data-driver="${driver.name.toLowerCase()}" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>No Image</text></svg>';">
                         <h3 class="driver-name">${driver.name}</h3>
                         <p class="about-label">About ${driver.name.split(' ')[0]}:</p>
                     </div>
@@ -658,7 +658,7 @@ function renderCrew() {
     if (!crewGrid) return;
     
     crewGrid.innerHTML = websiteData.crew.map(member => `
-        <div class="crew-card fade-in">
+        <div class="crew-card fade-in" data-crew="${member.name.toLowerCase()}">
             <div class="flip-card">
                 <div class="flip-card-front">
                     <img src="${member.image}" alt="${member.name}" class="crew-image" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2218%22>No Image</text></svg>';">
@@ -669,7 +669,7 @@ function renderCrew() {
                 </div>
                 <div class="flip-card-back">
                     <div class="back-top-content">
-                        <img src="${member.image}" alt="${member.name}" class="crew-image-small" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>No Image</text></svg>';">
+                        <img src="${member.image}" alt="${member.name}" class="crew-image-small" data-crew="${member.name.toLowerCase()}" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>No Image</text></svg>';">
                         <h3 class="crew-name">${member.name}</h3>
                         <p class="about-label">About ${member.name.split(' ')[0]}:</p>
                     </div>
@@ -786,11 +786,11 @@ function renderSocialLinks() {
 
 // Start countdown timer for dual races
 function startCountdown() {
-    // Race 1: Enduro Elite Race 8 - September 26, 2025 at 1:00 PM
-    const race1Date = new Date('2025-09-26T13:00:00').getTime();
+    // Race 1: Enduro Elite Race 8 - September 26, 2025 at 1:00 PM EST
+    const race1Date = new Date('2025-09-26T18:00:00Z').getTime(); // 1:00 PM EST = 6:00 PM UTC
     
-    // Race 2: NASA 25hrs of Ozarks - November 15, 2025 at 12:00 PM
-    const race2Date = new Date('2025-11-15T12:00:00').getTime();
+    // Race 2: NASA 25hrs of Ozarks - November 15, 2025 at 11:00 AM CT
+    const race2Date = new Date('2025-11-15T17:00:00Z').getTime(); // 11:00 AM CT = 5:00 PM UTC
     
     const countdown = setInterval(() => {
         const now = new Date().getTime();
@@ -798,11 +798,13 @@ function startCountdown() {
         // Calculate time for Race 1
         const distance1 = race1Date - now;
         if (distance1 > 0) {
-            const days1 = Math.floor(distance1 / (1000 * 60 * 60 * 24));
+            const months1 = Math.floor(distance1 / (1000 * 60 * 60 * 24 * 30.44)); // Average month length
+            const days1 = Math.floor((distance1 % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
             const hours1 = Math.floor((distance1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes1 = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 * 60));
             const seconds1 = Math.floor((distance1 % (1000 * 60)) / 1000);
             
+            document.getElementById('months1').textContent = months1.toString().padStart(2, '0');
             document.getElementById('days1').textContent = days1.toString().padStart(2, '0');
             document.getElementById('hours1').textContent = hours1.toString().padStart(2, '0');
             document.getElementById('minutes1').textContent = minutes1.toString().padStart(2, '0');
@@ -814,11 +816,13 @@ function startCountdown() {
         // Calculate time for Race 2
         const distance2 = race2Date - now;
         if (distance2 > 0) {
-            const days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+            const months2 = Math.floor(distance2 / (1000 * 60 * 60 * 24 * 30.44)); // Average month length
+            const days2 = Math.floor((distance2 % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
             const hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
             const seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
             
+            document.getElementById('months2').textContent = months2.toString().padStart(2, '0');
             document.getElementById('days2').textContent = days2.toString().padStart(2, '0');
             document.getElementById('hours2').textContent = hours2.toString().padStart(2, '0');
             document.getElementById('minutes2').textContent = minutes2.toString().padStart(2, '0');
