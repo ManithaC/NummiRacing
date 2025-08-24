@@ -719,7 +719,7 @@ function renderGallery() {
     
     galleryGrid.innerHTML = websiteData.gallery.map(item => `
         <div class="gallery-item fade-in" data-race="${item.race}">
-            <img src="${item.image}" alt="Gallery Image" onerror="this.src='images/placeholder.jpg'">
+            <img src="${item.image}" alt="Gallery Image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <div class="gallery-overlay">
                 <p>${item.caption}</p>
             </div>
@@ -734,7 +734,7 @@ function renderMerch() {
     
     merchGrid.innerHTML = websiteData.merch.map(item => `
         <div class="merch-item fade-in">
-            <img src="${item.image}" alt="${item.name}" class="merch-image" onerror="this.src='images/placeholder.jpg'">
+            <img src="${item.image}" alt="${item.name}" class="merch-image" onerror="this.style.display='none'; this.parentElement.querySelector('.merch-info').style.marginTop='20px';">
             <div class="merch-info">
                 <h3 class="merch-name">${item.name}</h3>
                 <p class="merch-price">${item.price}</p>
@@ -752,7 +752,7 @@ function renderSponsors() {
     
     sponsorsGrid.innerHTML = websiteData.sponsors.map(sponsor => `
         <div class="sponsor-item fade-in">
-            <img src="${sponsor.logo}" alt="${sponsor.name}" class="sponsor-logo" onerror="this.src='images/placeholder.jpg'">
+            <img src="${sponsor.logo}" alt="${sponsor.name}" class="sponsor-logo" onerror="this.style.display='none'; this.nextElementSibling.style.marginTop='10px';">
             <h3 class="sponsor-name">${sponsor.name}</h3>
             <p class="sponsor-description">${sponsor.description}</p>
         </div>
