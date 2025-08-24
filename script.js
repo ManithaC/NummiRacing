@@ -196,31 +196,31 @@ function loadDefaultData() {
             {
                 id: 1,
                 name: "JRP",
-                logo: "images/jrp.jpg",
+                logo: "images/jrp.png",
                 website: "https://jrponline.com"
             },
             {
                 id: 2,
                 name: "BSQUARED",
-                logo: "images/bsquared.jpg",
+                logo: "images/bsquared.png",
                 website: "https://b-squared.io"
             },
             {
                 id: 3,
                 name: "XII MOTORSPORTS",
-                logo: "images/xii.jpg",
+                logo: "images/xii.png",
                 website: "https://xiimotorsports.com"
             },
             {
                 id: 4,
                 name: "SPEEDACADEMY",
-                logo: "images/speedacademy.jpg",
+                logo: "images/speedacademy.png",
                 website: "https://speed.academy"
             },
             {
                 id: 5,
                 name: "OCTANE VISION",
-                logo: "images/octane.jpg",
+                logo: "images/octane.png",
                 website: "https://www.youtube.com/@Octane.Vision"
             }
         ],
