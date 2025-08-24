@@ -195,27 +195,33 @@ function loadDefaultData() {
         sponsors: [
             {
                 id: 1,
-                name: "XIII Motorsports",
-                logo: "images/xiii-motorsports.jpg",
-                description: "Performance parts and racing support"
+                name: "JRP",
+                logo: "images/jrp.jpg",
+                website: "https://jrponline.com"
             },
             {
                 id: 2,
-                name: "SpeedAcademy",
-                logo: "images/speedacademy.jpg",
-                description: "Driver training and education"
+                name: "BSQUARED",
+                logo: "images/bsquared.jpg",
+                website: "https://b-squared.io"
             },
             {
                 id: 3,
-                name: "JRP",
-                logo: "images/jrp.jpg",
-                description: "Technical consulting and support"
+                name: "XII MOTORSPORTS",
+                logo: "images/xii.jpg",
+                website: "https://xiimotorsports.com"
             },
             {
                 id: 4,
-                name: "BSquared",
-                logo: "images/bsquared.jpg",
-                description: "Racing equipment and gear"
+                name: "SPEEDACADEMY",
+                logo: "images/speedacademy.jpg",
+                website: "https://speed.academy"
+            },
+            {
+                id: 5,
+                name: "OCTANE VISION",
+                logo: "images/octane.jpg",
+                website: "https://www.youtube.com/@Octane.Vision"
             }
         ],
         socialLinks: {
@@ -751,11 +757,9 @@ function renderSponsors() {
     if (!sponsorsGrid) return;
     
     sponsorsGrid.innerHTML = websiteData.sponsors.map(sponsor => `
-        <div class="sponsor-item fade-in">
+        <a href="${sponsor.website}" class="sponsor-item fade-in" target="_blank" rel="noopener">
             <img src="${sponsor.logo}" alt="${sponsor.name}" class="sponsor-logo" onerror="this.style.display='none'; this.nextElementSibling.style.marginTop='10px';">
-            <h3 class="sponsor-name">${sponsor.name}</h3>
-            <p class="sponsor-description">${sponsor.description}</p>
-        </div>
+        </a>
     `).join('');
 }
 

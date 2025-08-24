@@ -1068,38 +1068,36 @@ section:nth-child(even) {
 }
 
 .sponsor-item {
-    background: white;
+    background: var(--card-bg);
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    border: 2px solid transparent;
 }
 
 .sponsor-item:hover {
     transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 25px rgba(122, 146, 146, 0.2);
 }
 
 .sponsor-logo {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
-    margin: 0 auto 1rem;
+    margin: 0 auto;
+    transition: all 0.3s ease;
 }
 
-.sponsor-item:has(img[style*="display: none"]) .sponsor-name {
-    margin-top: 10px;
+.sponsor-item:hover .sponsor-logo {
+    transform: scale(1.05);
 }
 
-.sponsor-name {
-    color: var(--accent-color);
-    margin-bottom: 0.5rem;
-}
 
-.sponsor-description {
-    color: #666;
-    font-size: 0.9rem;
-}
 
 /* Connect Section */
 .connect-buttons {
