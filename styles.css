@@ -1149,6 +1149,28 @@ section:nth-child(even) {
         gap: 2rem;
     }
     
+    .spec-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem 0;
+    }
+    
+    .spec-label {
+        min-width: auto;
+        font-size: 0.9rem;
+    }
+    
+    .spec-value {
+        text-align: left;
+        max-width: 100%;
+        font-size: 0.9rem;
+    }
+    
+    .car-specs {
+        margin: 1rem 0;
+    }
+    
     .connect-buttons {
         gap: 1rem;
         flex-direction: column;
