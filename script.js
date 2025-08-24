@@ -18,11 +18,30 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.clear();
     sessionStorage.clear();
     
-    // New splash screen sequence:
-    // 1. Black screen (0.5s)
-    // 2. "Welcome to" text fades in (1s)
-    // 3. Hero logo fades in on top (1s) - starting at 1.5s
-    // 4. Black screen and text fade away (1s) - starting at 3s
+    // Updated splash screen sequence for smoother, more welcoming experience:
+    // 1. Black screen (0.2s) - slightly longer for anticipation
+    // 2. "Welcome to" text fades in (0.3s) - starting at 0.2s, more graceful
+    // 3. Hero logo fades in (0.6s) - starting at 0.5s, more welcoming timing
+    // 4. Fade black away (0.5s) - starting at 1.1s, ending at 1.6s
+    // 5. Lower z-index of hero content to go under navigation (at 1.6s)
+    
+    // Start logo animation after splash text is fully visible
+    setTimeout(() => {
+        const heroContent = document.querySelector('.hero-content');
+        const heroLogo = document.querySelector('.hero-logo');
+        if (heroContent) {
+            heroContent.style.opacity = '1';
+        }
+        if (heroLogo) {
+            // Animate logo with welcoming effect
+            setTimeout(() => {
+                heroLogo.style.opacity = '1';
+                heroLogo.style.transform = 'scale(1) translateY(0)';
+            }, 100); // Small delay for smooth transition
+        }
+    }, 500); // Logo starts appearing at 0.5s
+    
+    // Fade out splash screen and adjust z-index
     setTimeout(() => {
         const splashScreen = document.getElementById('splash-screen');
         if (splashScreen) {
@@ -30,9 +49,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // Remove splash screen from DOM after fade transition
             setTimeout(() => {
                 splashScreen.remove();
-            }, 1000);
+                
+                // Lower the z-index of hero content so it goes under the navigation menu
+                const heroContent = document.querySelector('.hero-content');
+                if (heroContent) {
+                    heroContent.style.zIndex = '999';
+                }
+            }, 500);
         }
-    }, 3000); // Total 3 seconds: 0.5 + 1 + 1.5 = 3s
+    }, 1100); // Start fade out at 1.1s, z-index changes after 1.6s
 
     initializeWebsite();
     setupEventListeners();
@@ -234,23 +259,34 @@ function setupEventListeners() {
     if (darkModeToggle && darkModeIcon) {
         // Check for saved dark mode preference
         const darkMode = localStorage.getItem('darkMode');
-        if (darkMode === 'light') {
-            document.body.classList.add('light-mode');
-            darkModeIcon.className = 'fas fa-sun';
-        }
+                        if (darkMode === 'light') {
+                    document.body.classList.add('light-mode');
+                    switchThemeIcon(darkModeIcon, true);
+                } else {
+                    switchThemeIcon(darkModeIcon, false);
+                }
         
         // Toggle dark/light mode
         darkModeToggle.addEventListener('click', function() {
             document.body.classList.toggle('light-mode');
             
-            if (document.body.classList.contains('light-mode')) {
-                localStorage.setItem('darkMode', 'light');
-                darkModeIcon.className = 'fas fa-sun';
-            } else {
-                localStorage.setItem('darkMode', 'dark');
-                darkModeIcon.className = 'fas fa-moon';
-            }
+                            if (document.body.classList.contains('light-mode')) {
+                    localStorage.setItem('darkMode', 'light');
+                    switchThemeIcon(darkModeIcon, true);
+                } else {
+                    localStorage.setItem('darkMode', 'dark');
+                    switchThemeIcon(darkModeIcon, false);
+                }
         });
+        
+        // Function to switch theme icons
+        function switchThemeIcon(iconElement, isLightMode) {
+            if (isLightMode) {
+                iconElement.textContent = '☀'; // Sun for light mode
+            } else {
+                iconElement.textContent = '☾'; // Moon for dark mode
+            }
+        }
     }
     
     // Smooth scrolling for navigation links

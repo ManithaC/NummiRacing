@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nummi Racing - Amatuer Endurance Racing Team</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -38,6 +39,7 @@
             <div class="nav-menu" id="nav-menu">
                             <a href="#home" class="nav-link">Home</a>
             <a href="#about" class="nav-link">About</a>
+            <a href="#highlights" class="nav-link">Our Story</a>
             <a href="#drivers" class="nav-link">Drivers</a>
             <a href="#crew" class="nav-link">Crew</a>
             <a href="#car" class="nav-link">The Car</a>
@@ -133,6 +135,23 @@
                 <div class="about-image">
                     <img src="images/team-photo.jpg" alt="Nummi Racing Team" id="team-photo">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Movie Section -->
+    <section id="highlights" class="video-section">
+        <div class="container">
+            <h2>Our Story</h2>
+            <p>Experience the journey of Nummi Racing through the lens of <a href="https://www.instagram.com/octanevision/" target="_blank" class="instagram-link"><i class="fab fa-instagram"></i>@octanevision</a></p>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/swgQvlwt8AI" 
+                    title="Nummi Racing Team Movie"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
             </div>
         </div>
     </section>
@@ -294,7 +313,7 @@
 
     <!-- Dark Mode Toggle -->
     <div class="dark-mode-toggle" id="dark-mode-toggle">
-        <i class="fas fa-moon" id="dark-mode-icon"></i>
+        <span id="dark-mode-icon" class="theme-icon">☾</span>
     </div>
 
     <script src="script.js"></script>
