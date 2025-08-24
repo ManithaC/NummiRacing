@@ -41,7 +41,7 @@ body.light-mode {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 1001;
     opacity: 1;
     transition: opacity 1s ease-out;
 }
@@ -286,7 +286,7 @@ h4 { font-size: 1.5rem; }
 }
 
 .hero-content {
-    z-index: 99998;
+    z-index: 2;
     position: absolute;
     top: 33.33vh;
     left: 50%;
@@ -311,7 +311,7 @@ h4 { font-size: 1.5rem; }
     margin-right: auto;
     opacity: 0;
     animation: heroLogoFadeIn 1s ease-out 1.5s forwards;
-    z-index: 99999;
+    z-index: 1;
     position: relative;
 }
 
@@ -681,8 +681,21 @@ section:nth-child(even) {
 .spec-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0.5rem 0;
     border-bottom: 1px solid #eee;
+    gap: 1rem;
+}
+
+.spec-label {
+    font-weight: 600;
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.spec-value {
+    text-align: right;
+    flex-shrink: 0;
 }
 
 .spec-label {
