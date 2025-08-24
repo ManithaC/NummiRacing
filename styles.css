@@ -1061,24 +1061,28 @@ section:nth-child(even) {
 
 /* Sponsors Section */
 .sponsors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
     margin-top: 2rem;
 }
 
 .sponsor-item {
     background: #000000;
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: center;
     transition: all 0.3s ease;
     text-decoration: none;
-    display: block;
     border: 2px solid transparent;
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
 }
 
 .sponsor-item:hover {
@@ -1087,16 +1091,134 @@ section:nth-child(even) {
 }
 
 .sponsor-logo {
-    width: 80%;
-    height: 80%;
-    max-width: 150px;
-    max-height: 150px;
+    width: 85%;
+    height: 85%;
+    max-width: 200px;
+    max-height: 200px;
     object-fit: contain;
     transition: all 0.3s ease;
 }
 
 .sponsor-item:hover .sponsor-logo {
     transform: scale(1.05);
+}
+
+/* Become a Sponsor Section */
+.become-sponsor-container {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.become-sponsor-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.become-sponsor-btn:hover {
+    background: var(--accent-red);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(179, 64, 45, 0.3);
+}
+
+.become-sponsor-btn i {
+    transition: transform 0.3s ease;
+}
+
+.become-sponsor-btn.active i {
+    transform: rotate(45deg);
+}
+
+.sponsor-form {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--secondary-color);
+}
+
+.sponsor-form h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.sponsor-form p {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--secondary-color);
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.btn-secondary {
+    background: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--accent-color);
+    color: white;
 }
 
 

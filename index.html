@@ -279,6 +279,50 @@
             <div class="sponsors-grid" id="sponsors-grid">
                 <!-- Sponsors will be populated by JavaScript -->
             </div>
+            
+            <!-- Become a Sponsor Button and Form -->
+            <div class="become-sponsor-container">
+                <button id="become-sponsor-btn" class="become-sponsor-btn">
+                    <i class="fas fa-plus"></i>
+                    Become a Sponsor
+                </button>
+                
+                <div id="sponsor-form" class="sponsor-form" style="display: none;">
+                    <h3>Interested in Sponsoring Nummi Racing?</h3>
+                    <p>Fill out the form below and we'll get back to you!</p>
+                    
+                    <form id="sponsor-contact-form" action="https://formspree.io/f/mqadzlwk" method="POST">
+                        <div class="form-group">
+                            <label for="sponsor-email">Email *</label>
+                            <input type="email" id="sponsor-email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsor-company">Company Name *</label>
+                            <input type="text" id="sponsor-company" name="company" required>
+                        </div>
+                        
+                        <div class="sponsor-email-field" style="display: none;">
+                            <input type="email" name="_replyto" value="nummiracing45@gmail.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsor-product">Product Type</label>
+                            <input type="text" id="sponsor-product" name="product" placeholder="e.g., Performance Parts, Apparel, etc.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsor-message">Message</label>
+                            <textarea id="sponsor-message" name="message" rows="5" placeholder="Tell us about your company and how you'd like to partner with Nummi Racing..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" id="cancel-sponsor-btn" class="btn btn-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
 

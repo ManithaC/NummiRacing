@@ -197,7 +197,7 @@ function loadDefaultData() {
                 id: 1,
                 name: "JRP",
                 logo: "images/jrp.png",
-                website: "https://jrponline.com"
+                website: "https://www.jrponline.com/"
             },
             {
                 id: 2,
@@ -209,13 +209,13 @@ function loadDefaultData() {
                 id: 3,
                 name: "XII MOTORSPORTS",
                 logo: "images/xii.png",
-                website: "https://xiimotorsports.com"
+                website: "https://www.xiiimotorsports.com/"
             },
             {
                 id: 4,
                 name: "SPEEDACADEMY",
                 logo: "images/speedacademy.png",
-                website: "https://speed.academy"
+                website: "http://speed.academy/"
             },
             {
                 id: 5,
@@ -257,6 +257,9 @@ function setupEventListeners() {
     
     // Setup flip card interactions
     setupFlipCards();
+    
+    // Setup sponsor form functionality
+    setupSponsorForm();
     
     // Dark mode toggle
     const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -941,3 +944,92 @@ function hideLoading(element, content) {
 window.NummiRacing = {
     getData: () => websiteData
 };
+
+// Setup sponsor form functionality
+function setupSponsorForm() {
+    const becomeSponsorBtn = document.getElementById('become-sponsor-btn');
+    const sponsorForm = document.getElementById('sponsor-form');
+    const cancelBtn = document.getElementById('cancel-sponsor-btn');
+    const contactForm = document.getElementById('sponsor-contact-form');
+    
+    if (!becomeSponsorBtn || !sponsorForm || !cancelBtn || !contactForm) return;
+    
+    // Toggle form visibility
+    becomeSponsorBtn.addEventListener('click', function() {
+        const isVisible = sponsorForm.style.display !== 'none';
+        
+        if (isVisible) {
+            sponsorForm.style.display = 'none';
+            becomeSponsorBtn.classList.remove('active');
+        } else {
+            sponsorForm.style.display = 'block';
+            becomeSponsorBtn.classList.add('active');
+            // Smooth scroll to form
+            sponsorForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+    
+    // Cancel button
+    cancelBtn.addEventListener('click', function() {
+        sponsorForm.style.display = 'none';
+        becomeSponsorBtn.classList.remove('active');
+        contactForm.reset();
+    });
+    
+    // Handle form submission
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('sponsor-email').value;
+        const company = document.getElementById('sponsor-company').value;
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showNotification('Please enter a valid email address.', 'error');
+            return;
+        }
+        
+        // Validate required fields
+        if (!email.trim() || !company.trim()) {
+            showNotification('Please fill in all required fields.', 'error');
+            return;
+        }
+        
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Show loading state
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        // Submit form data to Formspree
+        fetch(contactForm.action, {
+            method: 'POST',
+            body: new FormData(contactForm),
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Success
+                showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+                contactForm.reset();
+                sponsorForm.style.display = 'none';
+                becomeSponsorBtn.classList.remove('active');
+            } else {
+                throw new Error('Failed to send message');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Failed to send message. Please try again or contact us directly.', 'error');
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+    });
+}
