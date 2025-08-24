@@ -340,7 +340,7 @@ body.light-mode .nav-logo h2 {
 }
 
 .nav-link {
-    color: white;
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -490,6 +490,11 @@ body.light-mode .hero-logo {
     height: 100%;
     background: url('images/hero-bg.jpg') center/cover;
     z-index: 1;
+}
+
+/* Light mode hero background - remove dark overlay */
+body.light-mode .hero-background {
+    filter: brightness(1.2) contrast(1.1);
 }
 
 
@@ -1243,6 +1248,11 @@ section:nth-child(even) {
         text-align: center;
         transition: 0.3s;
         padding: 2rem 0;
+    }
+
+    /* Light mode mobile menu */
+    body.light-mode .nav-menu {
+        background-color: rgba(255, 255, 255, 0.95);
     }
 
     .nav-menu.active {

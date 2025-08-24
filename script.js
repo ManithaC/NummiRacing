@@ -259,12 +259,12 @@ function setupEventListeners() {
     if (darkModeToggle && darkModeIcon) {
         // Check for saved dark mode preference
         const darkMode = localStorage.getItem('darkMode');
-                        if (darkMode === 'light') {
-                    document.body.classList.add('light-mode');
-                    switchThemeIcon(darkModeIcon, true);
-                } else {
-                    switchThemeIcon(darkModeIcon, false);
-                }
+        if (darkMode === 'light') {
+            document.body.classList.add('light-mode');
+            switchThemeIcon(darkModeIcon, true);
+        } else {
+            switchThemeIcon(darkModeIcon, false);
+        }
         
         // Toggle dark/light mode
         darkModeToggle.addEventListener('click', function() {
