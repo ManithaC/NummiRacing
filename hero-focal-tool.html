@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Background Focal Point Tool - Nummi Racing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+        .image-container {
+            position: relative;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .hero-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: crosshair;
+        }
+        .focal-point {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            border: 2px solid white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: move;
+            z-index: 10;
+        }
+        .focal-point::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .primary-btn {
+            background: #2196F3;
+            color: white;
+        }
+        .primary-btn:hover {
+            background: #1976D2;
+        }
+        .secondary-btn {
+            background: #757575;
+            color: white;
+        }
+        .secondary-btn:hover {
+            background: #616161;
+        }
+        .success-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .success-btn:hover {
+            background: #388E3C;
+        }
+        .preview-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .preview-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .preview-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: background-position 0.3s ease;
+        }
+        .coordinate-display {
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        .size-presets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .size-preset {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+        }
+        .size-preset h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .size-preset .preview {
+            width: 100%;
+            height: 120px;
+            border: 1px solid #eee;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .size-preset .preview-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Hero Background Focal Point Tool</h1>
+        
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ol>
+                <li>Click anywhere on the hero background image to set the focal point</li>
+                <li>Drag the red dot to fine-tune the position</li>
+                <li>Use the preview section to see how it looks at different screen sizes</li>
+                <li>Copy the generated CSS to your stylesheet</li>
+            </ol>
+        </div>
+
+        <div class="image-container">
+            <img src="images/hero-bg2-web.jpg" alt="Hero Background" class="hero-image" id="heroImage">
+            <div class="focal-point" id="focalPoint" style="display: none;"></div>
+        </div>
+
+        <div class="controls">
+            <button class="primary-btn" onclick="setRandomFocalPoint()">🎲 Random Position</button>
+            <button class="secondary-btn" onclick="centerFocalPoint()">🎯 Center</button>
+            <button class="success-btn" onclick="exportCSS()">📋 Copy CSS</button>
+            <button class="secondary-btn" onclick="resetFocalPoint()">🔄 Reset</button>
+        </div>
+
+        <div class="coordinate-display" id="coordinateDisplay">
+            <strong>Focal Point:</strong> Not set
+        </div>
+
+        <div class="preview-section">
+            <h3>📱 Preview at Different Sizes</h3>
+            <div class="size-presets">
+                <div class="size-preset">
+                    <h4>Desktop (1920x1080)</h4>
+                    <div class="preview">
+                        <div class="preview-bg" id="previewDesktop"></div>
+                    </div>
+                </div>
+                <div class="size-preset">
+                    <h4>Tablet (768x1024)</h4>
+                    <div class="preview">
+                        <div class="preview-bg" id="previewTablet"></div>
+                    </div>
+                </div>
+                <div class="size-preset">
+                    <h4>Mobile (375x667)</h4>
+                    <div class="preview">
+                        <div class="preview-bg" id="previewMobile"></div>
+                    </div>
+                </div>
+                <div class="size-preset">
+                    <h4>Ultra-wide (2560x1080)</h4>
+                    <div class="preview">
+                        <div class="preview-bg" id="previewUltraWide"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let focalPoint = { x: 50, y: 50 };
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+
+        const heroImage = document.getElementById('heroImage');
+        const focalPointElement = document.getElementById('focalPoint');
+        const coordinateDisplay = document.getElementById('coordinateDisplay');
+
+        // Initialize with center position
+        centerFocalPoint();
+
+        // Click to set focal point
+        heroImage.addEventListener('click', function(e) {
+            const rect = heroImage.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            setFocalPoint(x, y);
+        });
+
+        // Drag functionality
+        focalPointElement.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            const rect = focalPointElement.getBoundingClientRect();
+            dragOffset.x = e.clientX - rect.left;
+            dragOffset.y = e.clientY - rect.top;
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            
+            const rect = heroImage.getBoundingClientRect();
+            const x = ((e.clientX - dragOffset.x - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - dragOffset.y - rect.top) / rect.height) * 100;
+            
+            setFocalPoint(x, y);
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+
+        function setFocalPoint(x, y) {
+            // Clamp values to image bounds
+            x = Math.max(0, Math.min(100, x));
+            y = Math.max(0, Math.min(100, y));
+            
+            focalPoint = { x, y };
+            
+            // Update visual indicator
+            focalPointElement.style.left = x + '%';
+            focalPointElement.style.top = y + '%';
+            focalPointElement.style.display = 'block';
+            
+            // Update coordinate display
+            coordinateDisplay.innerHTML = `<strong>Focal Point:</strong> ${x.toFixed(1)}% ${y.toFixed(1)}%`;
+            
+            // Update all previews
+            updatePreviews();
+        }
+
+        function centerFocalPoint() {
+            setFocalPoint(50, 50);
+        }
+
+        function setRandomFocalPoint() {
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            setFocalPoint(x, y);
+        }
+
+        function resetFocalPoint() {
+            focalPointElement.style.display = 'none';
+            focalPoint = { x: 50, y: 50 };
+            coordinateDisplay.innerHTML = '<strong>Focal Point:</strong> Not set';
+            updatePreviews();
+        }
+
+        function updatePreviews() {
+            const previews = [
+                'previewDesktop',
+                'previewTablet', 
+                'previewMobile',
+                'previewUltraWide'
+            ];
+            
+            previews.forEach(id => {
+                const preview = document.getElementById(id);
+                if (preview) {
+                    preview.style.backgroundImage = `url('images/hero-bg2-web.jpg')`;
+                    preview.style.backgroundPosition = `${focalPoint.x}% ${focalPoint.y}%`;
+                }
+            });
+        }
+
+        function exportCSS() {
+            const css = `/* Hero Background Focal Point CSS */
+.hero-background {
+    background-position: ${focalPoint.x}% ${focalPoint.y}% !important;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 768px) {
+    .hero-background {
+        background-position: ${focalPoint.x}% ${focalPoint.y}% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-background {
+        background-position: ${focalPoint.x}% ${focalPoint.y}% !important;
+    }
+}`;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(css).then(() => {
+                alert('CSS copied to clipboard! Paste it into your styles.css file.');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = css;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('CSS copied to clipboard! Paste it into your styles.css file.');
+            });
+        }
+
+        // Initialize previews
+        updatePreviews();
+    </script>
+</body>
+</html>

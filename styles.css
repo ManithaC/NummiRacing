@@ -2,32 +2,32 @@
 :root {
     --primary-color: #1a1a1a;
     --secondary-color: #2c2c2c;
-    --accent-color: #7A9292; /* Blue-gray */
-    --accent-red: #B3402D; /* Red accent */
+    --accent-color: #7899a0; /* Nummi logo primary blue-gray */
+    --accent-red: #f22a0a; /* Nummi logo red accent */
     --text-color: #ffffff;
     --bg-color: #0f0f0f;
     --card-bg: #1e1e1e;
     
     /* Logo-inspired colors */
-    --logo-primary: #7A9292;
-    --logo-secondary: #1a1a1a;
-    --logo-accent: #ffffff;
-    --logo-red: #B3402D;
+    --logo-primary: #7899a0;
+    --logo-secondary: #697576;
+    --logo-accent: #9fd4d5;
+    --logo-red: #f22a0a;
 }
 
 /* Dark mode variables */
 body.light-mode {
     --primary-color: #ffffff;
     --secondary-color: #f8f9fa;
-    --accent-color: #7A9292;
-    --accent-red: #B3402D;
+    --accent-color: #7899a0;
+    --accent-red: #f22a0a;
     --text-color: #1a1a1a;
     --bg-color: #ffffff;
     --card-bg: #f8f9fa;
-    --logo-primary: #7A9292;
-    --logo-secondary: #1a1a1a;
-    --logo-accent: #ffffff;
-    --logo-red: #B3402D;
+    --logo-primary: #7899a0;
+    --logo-secondary: #697576;
+    --logo-accent: #9fd4d5;
+    --logo-red: #f22a0a;
 }
 
 
@@ -65,7 +65,7 @@ body.light-mode {
 .splash-text {
     font-family: 'VAG Rounded', 'VAG Rounded Std', 'VAG Rounded Next', sans-serif;
     font-size: 3rem;
-    color: #7A9292;
+    color: #7899a0;
     margin-bottom: 2rem;
     font-weight: bold;
     opacity: 0;
@@ -314,8 +314,17 @@ body.light-mode .navbar {
     gap: 1rem;
 }
 
+.nav-logo a {
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo a:hover {
+    transform: scale(1.05);
+}
+
 .nav-logo-img {
-    height: 50px;
+    height: 100px;
     width: auto;
     border-radius: 5px;
     object-fit: contain;
@@ -438,14 +447,14 @@ body.light-mode .hero {
 }
 
 .hero-logo {
-    height: 390px;
+    height: 700px;
     width: auto;
     margin-bottom: 2rem;
     border-radius: 15px;
     object-fit: contain;
     filter: drop-shadow(3px 3px 12px rgba(0, 0, 0, 0.6));
     /* Logo specific styling */
-    max-width: 90%;
+    max-width: 95%;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -488,7 +497,7 @@ body.light-mode .hero-logo {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('images/hero-bg.jpg') center/cover;
+    background: url('images/hero-bg2-web.jpg') 67.2% 61.9%/cover;
     z-index: 1;
 }
 
@@ -618,8 +627,10 @@ section:nth-child(even) {
 }
 
 .about-text p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
 }
 
 .about-image img {
@@ -704,7 +715,17 @@ section:nth-child(even) {
 .back-content-area {
     flex-grow: 1;
     width: 100%;
-    /* This area is intentionally left blank for future content */
+    padding: 0.5rem;
+}
+
+.driver-bio, .crew-bio {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #1a1a1a;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    text-align: left;
 }
 
 .about-label {
@@ -1389,8 +1410,8 @@ section:nth-child(even) {
     }
 
     .hero-logo {
-        height: 260px;
-        max-width: 95%;
+        height: 490px;
+        max-width: 98%;
     }
 
     .splash-text {

@@ -96,7 +96,7 @@ function loadDefaultData() {
                 name: "Vinh Pham",
                 role: "Driver",
                 image: "images/vinh.jpg",
-                bio: "Racing enthusiast with a passion for precision driving and team coordination.",
+                bio: "Over 30 years of motorsports experience from karts to international FIA eRallys, Targa Newfoundland, autocross, time attacks and Formula SAE, Vinh is an academically trained engineer (University of Toronto), father of two boys and leader at Toyota Canada Inc. With over 20 years of automotive industry experience from manufacturing, quality, government relations, PR & public speaking, dealership liaison, product planning, marketing and inventory management, Vinh's breadth in the auto industry helps nummi racing operate with precision. Vinh daily drives a GR Supra & Toyota Land Cruiser.",
                 instagram: "vphamracing"
             },
             {
@@ -104,7 +104,7 @@ function loadDefaultData() {
                 name: "Patrick Alex",
                 role: "Driver", 
                 image: "images/patrick.jpg",
-                bio: "Experienced driver focused on consistency and performance optimization.",
+                bio: "",
                 instagram: "patrick.drives"
             },
             {
@@ -112,7 +112,7 @@ function loadDefaultData() {
                 name: "Hung Nguyen",
                 role: "Driver",
                 image: "images/hung.jpg", 
-                bio: "Dedicated team member bringing technical expertise to the track.",
+                bio: "",
                 instagram: "frdriver"
             },
             {
@@ -120,7 +120,7 @@ function loadDefaultData() {
                 name: "Nick Maitland",
                 role: "Driver",
                 image: "images/nick.jpg",
-                bio: "Competitive driver with strong analytical skills and race strategy.",
+                bio: "",
                 instagram: "heavymanufacturing"
             },
             {
@@ -128,7 +128,7 @@ function loadDefaultData() {
                 name: "Jason Li",
                 role: "Guest Driver",
                 image: "images/jason.jpg",
-                bio: "Guest driver contributing fresh perspectives and racing experience.",
+                bio: "",
                 instagram: "driven.by.jay"
             },
             {
@@ -136,7 +136,7 @@ function loadDefaultData() {
                 name: "Paul Joakim",
                 role: "Guest Driver", 
                 image: "images/paul.jpg",
-                bio: "Visiting driver sharing knowledge and expanding team capabilities.",
+                bio: "",
                 instagram: "paul_joakim"
             }
         ],
@@ -146,7 +146,7 @@ function loadDefaultData() {
                 name: "Adam Mann",
                 role: "Chief Mechanic",
                 image: "images/adam.jpg",
-                bio: "Lead mechanic ensuring peak vehicle performance and reliability.",
+                bio: "Tinkering with cars from a small age, Adam has been building winning race cars for over a decade. Father of two girls and Tech Support in the Product Quality area of Toyota Canada Inc. Adam has a busy schedule ensuring all things run smoothly at nummi racing. With decades of experience as a technician and shop foreman, Adam's prowess turning wrenches and problem solving are key to the wisdom gained on the 86 chassis. An agile and straight forward thinker, Adam's no stranger to tough motorsport challenges. He enjoys endurance and sportscar racing while relaxing by the campfire. Adam daily drives a Toyota Tundra & Toyota Prius PHEV.",
                 instagram: "mann.motorsport"
             },
             {
@@ -154,7 +154,7 @@ function loadDefaultData() {
                 name: "Joseph Yang",
                 role: "Data Analyst",
                 image: "images/joseph.jpg",
-                bio: "Performance analyst optimizing race strategy through data insights.",
+                bio: "",
                 instagram: "jsph.yang"
             },
             {
@@ -162,7 +162,7 @@ function loadDefaultData() {
                 name: "Luke Pham",
                 role: "Crew",
                 image: "images/luke.jpg",
-                bio: "Essential crew member supporting all team operations and logistics.",
+                bio: "",
                 instagram: "lukephamracing"
             },
             {
@@ -170,7 +170,7 @@ function loadDefaultData() {
                 name: "Manitha Chandrasena",
                 role: "Intern",
                 image: "images/manitha.jpg",
-                bio: "Learning the ropes and contributing to team success through dedication.",
+                bio: "",
                 instagram: "manitha_c"
             }
         ],
@@ -632,10 +632,9 @@ function renderDrivers() {
                     <div class="back-top-content">
                         <img src="${driver.image}" alt="${driver.name}" class="driver-image-small" data-driver="${driver.name.toLowerCase()}" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>No Image</text></svg>';">
                         <h3 class="driver-name">${driver.name}</h3>
-                        <p class="about-label">About ${driver.name.split(' ')[0]}:</p>
                     </div>
                     <div class="back-content-area">
-                        <!-- Blank space for future content -->
+                        ${driver.bio ? `<p class="driver-bio">${driver.bio}</p>` : ''}
                     </div>
                     <div class="back-bottom-content">
                         <a href="https://www.instagram.com/${driver.instagram}/" target="_blank" rel="noopener" class="instagram-link">
@@ -671,10 +670,9 @@ function renderCrew() {
                     <div class="back-top-content">
                         <img src="${member.image}" alt="${member.name}" class="crew-image-small" data-crew="${member.name.toLowerCase()}" onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%237A9292%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>No Image</text></svg>';">
                         <h3 class="crew-name">${member.name}</h3>
-                        <p class="about-label">About ${member.name.split(' ')[0]}:</p>
                     </div>
                     <div class="back-content-area">
-                        <!-- Blank space for future content -->
+                        ${member.bio ? `<p class="crew-bio">${member.bio}</p>` : ''}
                     </div>
                     <div class="back-bottom-content">
                         <a href="https://www.instagram.com/${member.instagram}/" target="_blank" rel="noopener" class="instagram-link">
