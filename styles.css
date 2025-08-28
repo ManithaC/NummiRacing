@@ -15,20 +15,7 @@
     --logo-red: #f22a0a;
 }
 
-/* Dark mode variables */
-body.light-mode {
-    --primary-color: #ffffff;
-    --secondary-color: #f8f9fa;
-    --accent-color: #7899a0;
-    --accent-red: #f22a0a;
-    --text-color: #1a1a1a;
-    --bg-color: #ffffff;
-    --card-bg: #f8f9fa;
-    --logo-primary: #7899a0;
-    --logo-secondary: #697576;
-    --logo-accent: #9fd4d5;
-    --logo-red: #f22a0a;
-}
+
 
 
 
@@ -236,9 +223,9 @@ h4 { font-size: 1.5rem; }
 }
 
 .video-section h2 {
-    color: var(--accent-color);
+    color: white;
     margin-bottom: 2rem;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
 }
 
 .video-section p {
@@ -292,11 +279,7 @@ h4 { font-size: 1.5rem; }
     transition: all 0.3s ease;
 }
 
-/* Light mode navigation */
-body.light-mode .navbar {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-}
+
 
 .nav-container {
     max-width: 1200px;
@@ -337,10 +320,7 @@ body.light-mode .navbar {
     margin: 0;
 }
 
-/* Light mode navigation logo text */
-body.light-mode .nav-logo h2 {
-    color: var(--accent-color);
-}
+
 
 .nav-menu {
     display: flex;
@@ -352,14 +332,13 @@ body.light-mode .nav-logo h2 {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
     transition: color 0.3s ease;
     position: relative;
 }
 
-/* Light mode navigation links */
-body.light-mode .nav-link {
-    color: #1a1a1a;
-}
+
 
 .nav-link:hover {
     color: var(--accent-color);
@@ -394,10 +373,7 @@ body.light-mode .nav-link {
     transition: 0.3s;
 }
 
-/* Light mode navigation bars */
-body.light-mode .bar {
-    background: #1a1a1a;
-}
+
 
 /* Custom theme icons */
 .theme-icon {
@@ -414,10 +390,7 @@ body.light-mode .bar {
     transform: scale(1.1);
 }
 
-/* Light mode icon color */
-body.light-mode .theme-icon svg path:first-child {
-    fill: #1a1a1a;
-}
+
 
 /* Hero Section */
 .hero {
@@ -427,10 +400,7 @@ body.light-mode .theme-icon svg path:first-child {
     color: var(--text-color);
 }
 
-/* Light mode hero background */
-body.light-mode .hero {
-    background: #ffffff;
-}
+
 
 .hero-content {
     z-index: 1002;
@@ -465,10 +435,7 @@ body.light-mode .hero {
     position: relative;
 }
 
-/* Light mode logo - no glow effect */
-body.light-mode .hero-logo {
-    filter: none;
-}
+
 
 .hero-title {
     font-family: 'VAG Rounded', 'VAG Rounded Std', 'VAG Rounded Next', sans-serif;
@@ -501,10 +468,7 @@ body.light-mode .hero-logo {
     z-index: 1;
 }
 
-/* Light mode hero background - remove dark overlay */
-body.light-mode .hero-background {
-    filter: brightness(1.2) contrast(1.1);
-}
+
 
 
 
@@ -553,7 +517,10 @@ body.light-mode .hero-background {
 }
 
 .countdown-section h2 {
-    color: var(--text-color) !important;
+    color: white !important;
+    font-size: 3.5rem !important;
+    margin-bottom: 2rem !important;
+    text-align: center !important;
 }
 
 .countdown-label {
@@ -618,12 +585,342 @@ section:nth-child(even) {
     background: var(--secondary-color);
 }
 
+/* Standard section headers */
+section h2 {
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 3.5rem;
+    text-align: center;
+}
+
 /* About Section */
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: center;
+}
+
+/* Results Section */
+.results-section {
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.results-section h2 {
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 3.5rem;
+}
+
+.results-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.results-overview {
+    margin-bottom: 3rem;
+}
+
+/* Increase spacing between digital stats and season results */
+.digital-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 6rem;
+    align-items: center;
+}
+
+.stat-line {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.counter-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--accent-color);
+}
+
+.counter-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 3.5rem;
+    color: var(--accent-color);
+    font-weight: 900;
+}
+
+.season-results {
+    text-align: left;
+}
+
+.season {
+    margin-bottom: 3rem;
+}
+
+.season h3 {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* New Result Cards Grid */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.result-card {
+    background: #000;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 300px;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.track-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    z-index: 2;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.track-map {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem 0;
+    min-height: 0;
+    width: 100%;
+}
+
+.track-canvas {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    background: #000;
+    z-index: 1;
+    object-fit: contain;
+    position: relative;
+}
+
+.race-position {
+    font-size: 8rem;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    margin: 0;
+    z-index: 2;
+    position: absolute;
+    opacity: 0.7;
+    text-align: center;
+    line-height: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+/* Position colors */
+.race-position.p1 {
+    color: #FFD700; /* Gold */
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.race-position.p2 {
+    color: #C0C0C0; /* Silver */
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+}
+
+.race-position.p3 {
+    color: #CD7F32; /* Bronze */
+    text-shadow: 0 0 10px rgba(205, 127, 50, 0.5);
+}
+
+.race-position.p4,
+.race-position.p5,
+.race-position.p6,
+.race-position.p7,
+.race-position.p12 {
+    color: white;
+}
+
+.race-position.dnf {
+    color: #dc3545;
+}
+
+.race-number {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    z-index: 2;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+/* Responsive grid */
+@media (max-width: 1024px) {
+    .results-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .results-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .result-card {
+        aspect-ratio: auto;
+        min-height: 250px;
+    }
+}
+
+/* Keep existing race-results styles for backward compatibility */
+.race-results {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.race-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--card-bg);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    transition: background-color 0.2s ease;
+}
+
+.race-item:hover {
+    background: rgba(120, 153, 160, 0.1);
+}
+
+.race-name {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.season-divider {
+    display: none;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .race-results {
+        grid-template-columns: 1fr;
+    }
+    
+    .race-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    /* Results summary mobile optimization */
+    .results-overview {
+        margin-bottom: 2rem;
+    }
+    
+    .digital-stats {
+        gap: 0.75rem;
+        margin-bottom: 4rem;
+    }
+    
+    .stat-line {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .counter-number {
+        font-size: 2.5rem;
+        line-height: 1;
+    }
+    
+    .counter-label {
+        font-size: 1.2rem;
+        line-height: 1.2;
+        text-align: center;
+        max-width: 100%;
+        word-wrap: break-word;
+    }
+    
+    /* Mobile-only: Hide dash between championship and position */
+    .season h3 {
+        font-size: 1.3rem;
+        line-height: 1.3;
+    }
+    
+    /* Hide the dash character on mobile */
+    .season-dash {
+        display: inline;
+    }
+    
+    @media (max-width: 768px) {
+        .season-dash {
+            display: none;
+        }
+        
+        /* Mobile: Three-line layout for season headers */
+        .season h3 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+        }
+        
+        .season-year {
+            display: block;
+            width: 100%;
+        }
+        
+        .season-position {
+            display: block;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    }
 }
 
 .about-text p {
@@ -905,6 +1202,18 @@ section:nth-child(even) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
+}
+
+/* Center upcoming races when previous results is removed */
+.schedule-content:has(.upcoming-races:only-child) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upcoming-races:only-child {
+    max-width: 600px;
+    width: 100%;
 }
 
 .race-item, .result-item {
@@ -1392,10 +1701,7 @@ section:nth-child(even) {
         padding: 2rem 0;
     }
 
-    /* Light mode mobile menu */
-    body.light-mode .nav-menu {
-        background-color: rgba(255, 255, 255, 0.95);
-    }
+
 
     .nav-menu.active {
         left: 0;
@@ -1592,30 +1898,7 @@ section:nth-child(even) {
     100% { transform: rotate(360deg); }
 }
 
-/* Dark Mode Toggle */
-.dark-mode-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    background: var(--accent-color);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 9999;
-    box-shadow: 0 4px 12px rgba(122, 146, 146, 0.3);
-    transition: all 0.3s ease;
-    font-size: 1.2rem;
-}
 
-.dark-mode-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(122, 146, 146, 0.4);
-}
 
 /* Update existing styles to use CSS variables */
 .navbar {
@@ -1660,7 +1943,13 @@ section {
 /* Adam */
 .driver-card[data-driver="adam mann"] img,
 .crew-card[data-crew="adam mann"] img {
-    object-position: 64% 41% !important;
+    object-position: 54.3% 33.1% !important;
+}
+
+/* Vpee */
+.driver-card[data-driver="vpee"] img,
+.crew-card[data-crew="vpee"] img {
+    object-position: 40.6% 51.0% !important;
 }
 
 
@@ -1701,10 +1990,16 @@ section {
     object-position: 59% 35% !important;
 }
 
+/* Amando */
+.driver-card[data-driver="amando widjaja"] img,
+.crew-card[data-crew="amando widjaja"] img {
+    object-position: 47.3% 27.5% !important;
+}
+
 /* Paul */
 .driver-card[data-driver="paul joakim"] img,
 .crew-card[data-crew="paul joakim"] img {
-    object-position: 57% 30% !important;
+    object-position: 45.2% 19.8% !important;
 }
 
 /* Vinh */
@@ -1716,9 +2011,13 @@ section {
 /* Mobile/Tablet Responsive Adjustments */
 @media (max-width: 768px) {
     /* Use focal points but adjust vertical positioning for mobile */
-    .driver-card[data-driver="adam"] img,
-    .crew-card[data-crew="adam"] img {
-        object-position: 64% 35% !important;
+    .driver-card[data-driver="adam mann"] img,
+    .crew-card[data-crew="adam mann"] img {
+        object-position: 54.3% 26.5% !important;
+    }
+    .driver-card[data-driver="vpee"] img,
+    .crew-card[data-crew="vpee"] img {
+        object-position: 40.6% 40.8% !important;
     }
     
     .driver-card[data-driver="jason"] img,
@@ -1751,9 +2050,14 @@ section {
         object-position: 59% 30% !important;
     }
     
-    .driver-card[data-driver="paul"] img,
-    .crew-card[data-crew="paul"] img {
-        object-position: 57% 30% !important;
+    .driver-card[data-driver="paul joakim"] img,
+    .crew-card[data-crew="paul joakim"] img {
+        object-position: 45.2% 15.9% !important;
+    }
+    
+    .driver-card[data-driver="amando widjaja"] img,
+    .crew-card[data-crew="amando widjaja"] img {
+        object-position: 47.3% 22.0% !important;
     }
     
     .driver-card[data-driver="vinh"] img,
@@ -1922,4 +2226,36 @@ section {
     .crew-card[data-crew="luke"] img {
         object-position: 71% 55% !important;
     }
+}
+
+/* Season headers */
+.season h3 {
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.season-year {
+    color: white;
+}
+
+.season-position {
+    font-weight: bold;
+}
+
+.season-position.gold {
+    color: #FFD700; /* Gold for 1st */
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.season-position.silver {
+    color: #C0C0C0; /* Silver for 2nd */
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+}
+
+.season-position.bronze {
+    color: #CD7F32; /* Bronze for 3rd */
+    text-shadow: 0 0 10px rgba(205, 127, 50, 0.5);
 }

@@ -39,12 +39,13 @@
             </a>
         </div>
             <div class="nav-menu" id="nav-menu">
-            <a href="#about" class="nav-link">About</a>
-            <a href="#highlights" class="nav-link">Our Story</a>
-            <a href="#drivers" class="nav-link">Drivers</a>
-            <a href="#crew" class="nav-link">Crew</a>
+            <a href="#about" class="nav-link">Who Are We</a>
+            <a href="#crew" class="nav-link">Our Crew</a>
+            <a href="#drivers" class="nav-link">Our Drivers</a>
             <a href="#car" class="nav-link">The Car</a>
-            <a href="#schedule" class="nav-link">Schedule</a>
+                            <a href="#schedule" class="nav-link">Upcoming Races</a>
+            <a href="#results" class="nav-link">Results</a>
+            <a href="#sponsors" class="nav-link">Sponsors</a>
             <a href="#contact" class="nav-link">Connect</a>
             </div>
             <div class="nav-toggle" id="nav-toggle">
@@ -169,16 +170,6 @@
         </div>
     </section>
 
-    <!-- Drivers Section -->
-    <section id="drivers" class="drivers-section">
-        <div class="container">
-            <h2>Our Drivers</h2>
-            <div class="drivers-grid" id="drivers-grid">
-                <!-- Drivers will be populated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
     <!-- Crew Section -->
     <section id="crew" class="crew-section">
         <div class="container">
@@ -189,50 +180,64 @@
         </div>
     </section>
 
+    <!-- Drivers Section -->
+    <section id="drivers" class="drivers-section">
+        <div class="container">
+            <h2>Our Drivers</h2>
+            <div class="drivers-grid" id="drivers-grid">
+                <!-- Drivers will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
     <!-- The Car Section -->
     <section id="car" class="car-section">
         <div class="container">
             <h2>The Car</h2>
             <div class="car-content">
                 <div class="car-details">
-                    <h3>2013 Scion FRS</h3>
+                    <h3>Toyota 86</h3>
                     <div class="car-specs">
-                                            <div class="spec-item">
-                        <span class="spec-label">Engine:</span>
-                        <span class="spec-value">FA24</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">ECU:</span>
-                        <span class="spec-value">LINK ECU G5</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Wheels:</span>
-                        <span class="spec-value">17x9 Enkei RPF1 +35</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Tire Brand:</span>
-                        <span class="spec-value">Continental Extremecontact Force</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Front Tire Size:</span>
-                        <span class="spec-value">255/45R17</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Rear Tire Size:</span>
-                        <span class="spec-value">255/45R17</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Suspension:</span>
-                        <span class="spec-value">MCS Motion Control Suspension 2Way</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Brakes:</span>
-                        <span class="spec-value">AP Racing</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Oil Pan:</span>
-                        <span class="spec-value">Formula Delta</span>
-                    </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Engine:</span>
+                            <span class="spec-value">2.4L naturally aspirated boxer 4 cylinder; FA24</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Horsepower:</span>
+                            <span class="spec-value">200hp</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">ECU:</span>
+                            <span class="spec-value">LINK ECU G5</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Tire:</span>
+                            <span class="spec-value">Continental Extremecontact Force</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Front Tire Size:</span>
+                            <span class="spec-value">255/45R17</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Rear Tire Size:</span>
+                            <span class="spec-value">255/45R17</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Suspension:</span>
+                            <span class="spec-value">MCS Motion Control Suspension 2Way</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Brakes:</span>
+                            <span class="spec-value">AP Racing</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Oil Pan:</span>
+                            <span class="spec-value">Formula Delta</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Curb Weight:</span>
+                            <span class="spec-value">Very Light</span>
+                        </div>
                     </div>
     
                 </div>
@@ -249,20 +254,15 @@
     <!-- Schedule Section -->
     <section id="schedule" class="schedule-section">
         <div class="container">
-            <h2>Race Schedule</h2>
+            <h2>Upcoming Races</h2>
             <div class="schedule-content">
                 <div class="upcoming-races">
-                    <h3>Upcoming Races</h3>
+
                     <div class="races-list" id="upcoming-races">
                         <!-- Upcoming races will be populated by JavaScript -->
                     </div>
                 </div>
-                <div class="previous-results">
-                    <h3>Previous Results</h3>
-                    <div class="results-list" id="previous-results">
-                        <!-- Previous results will be populated by JavaScript -->
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -283,7 +283,363 @@
         </div>
     </section>
 
+    <!-- Results Section -->
+    <section id="results" class="results-section">
+        <div class="container">
+            <h2>Results</h2>
+            <div class="results-content">
+                <div class="results-overview">
+                    <div class="digital-stats">
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="1">0</span>
+                            <span class="counter-label">Championship Win</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="5">0</span>
+                            <span class="counter-label">Race Wins</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="16">0</span>
+                            <span class="counter-label">Podiums</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="250">0</span>
+                            <span class="counter-label">Hours Racing</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="33">0</span>
+                            <span class="counter-label">Endurance Races</span>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="results-container">
+                    <div class="season">
+                        <h3><span class="season-year">2024 GT1 Championship</span><span class="season-dash"> - </span><span class="season-position bronze">3rd</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.24"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.25"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.16"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.26"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="0"></canvas>
+                                </div>
+                                <div class="race-position dnf">DNF</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 7</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.39"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 8</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville Pro</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-pro" data-lap-time="1.38"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 9</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="season-divider"></div>
+
+                    <div class="season">
+                        <h3><span class="season-year">2023 GT1 Championship</span><span class="season-dash"> - </span><span class="season-position gold">1st</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.24"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.25"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.16"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.39"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.37"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 7</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.18"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 8</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.19"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 9</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="season-divider"></div>
+
+                    <div class="season">
+                        <h3><span class="season-year">2022 GT1 Championship</span><span class="season-dash"> - </span><span class="season-position bronze">3rd</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.26"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.27"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.28"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.18"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.41"></canvas>
+                                </div>
+                                <div class="race-position p4">P4</div>
+                                <div class="race-number">Race 7</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.19"></canvas>
+                                </div>
+                                <div class="race-position p7">P7</div>
+                                <div class="race-number">Race 8</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.20"></canvas>
+                                </div>
+                                <div class="race-position p12">P12</div>
+                                <div class="race-number">Race 9</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="season-divider"></div>
+
+                    <div class="season">
+                        <h3><span class="season-year">2021 GT2 Championship</span><span class="season-dash"> - </span><span class="season-position silver">2nd</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.20"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.19"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.42"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville GT1</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-pro" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p4">P4</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.18"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Sponsors Section -->
     <section id="sponsors" class="sponsors-section">
@@ -368,11 +724,8 @@
 
 
 
-    <!-- Dark Mode Toggle -->
-    <div class="dark-mode-toggle" id="dark-mode-toggle">
-        <span id="dark-mode-icon" class="theme-icon">☾</span>
-    </div>
 
-    <script src="script.js?v=3"></script>
+
+    <script src="script.js?v=1.1"></script>
 </body>
 </html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP Pro Track Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            background: #000;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="trackCanvas" width="800" height="600"></canvas>
+        <div class="controls">
+            <button onclick="startAnimation()">Start</button>
+            <button onclick="stopAnimation()">Stop</button>
+            <button onclick="resetAnimation()">Reset</button>
+        </div>
+        <div style="margin-top: 20px; color: white; font-size: 18px;">
+            Lap Time: <span id="lapTimeDisplay">1:40</span>
+        </div>
+    </div>
+
+    <script>
+        // SMP Pro track coordinates (from the path file)
+        const trackCoordinates = [
+            [-77.15940169908536, 44.22500133703493],
+            [-77.15985781230157, 44.22489946628535],
+            [-77.16028172929077, 44.22476491974215],
+            [-77.16060905759886, 44.2246745811763],
+            [-77.16105980477722, 44.22466112648443],
+            [-77.16157762742854, 44.22468803586509],
+            [-77.1618003179988, 44.22479567326485],
+            [-77.16228594442312, 44.22512242845135],
+            [-77.16235033687718, 44.225293493678606],
+            [-77.16276083877177, 44.22594699671136],
+            [-77.16291108783123, 44.226154578509394],
+            [-77.1631954878366, 44.22622377227941],
+            [-77.16379648407442, 44.22629488801382],
+            [-77.16434650295278, 44.22629488801382],
+            [-77.16488310673654, 44.22627758959984],
+            [-77.16521043504464, 44.22626221322759],
+            [-77.16633730299057, 44.22617764310843],
+            [-77.16669951054459, 44.22613728005419],
+            [-77.16708318225, 44.226179565157956],
+            [-77.16738368036891, 44.22633525096],
+            [-77.16754734452294, 44.22650631266277],
+            [-77.16762246905267, 44.22671965858425],
+            [-77.16756075961754, 44.226900329300435],
+            [-77.16749368414457, 44.22719439853564],
+            [-77.16744538980404, 44.227528828429456],
+            [-77.16749636716351, 44.227669134658186],
+            [-77.16847298604995, 44.22802085976149],
+            [-77.16867152944994, 44.22809197332477],
+            [-77.16876543511212, 44.228211136400375],
+            [-77.16875470303643, 44.22830146953885],
+            [-77.16859372190132, 44.22835336298123],
+            [-77.16814834076077, 44.22843024207105],
+            [-77.16115470804822, 44.22943734887378],
+            [-77.16075829427837, 44.229364314990505],
+            [-77.16073683012704, 44.229337407747515],
+            [-77.16056511691623, 44.22922593475261],
+            [-77.16031291313784, 44.22896454897114],
+            [-77.15982460369463, 44.228583999949414],
+            [-77.15946507915949, 44.22818999458198],
+            [-77.1593658074595, 44.227972810007934],
+            [-77.15942751689464, 44.227767156619514],
+            [-77.15947312821626, 44.22762877262664],
+            [-77.15948386029193, 44.22742504004506],
+            [-77.15945434708384, 44.227227072804425],
+            [-77.15938458859193, 44.22704063702729],
+            [-77.1592869186891, 44.22673503483701],
+            [-77.1592278922729, 44.22646210575352],
+            [-77.15919569604587, 44.22628527778444],
+            [-77.15909910736477, 44.225977749616526],
+            [-77.15880934132156, 44.22598159372853],
+            [-77.15836932621886, 44.22602772305314],
+            [-77.15799906960807, 44.22595468493917],
+            [-77.15785418658645, 44.2257586348167],
+            [-77.15790248092698, 44.225577960596304],
+            [-77.15806346206213, 44.22535500015567],
+            [-77.15837469225669, 44.22527042873315],
+            [-77.1593996054837, 44.22500133703493]
+        ];
+
+        const canvas = document.getElementById('trackCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let currentPoint = 0;
+        let animationId;
+        let isRunning = false;
+        let currentSpeed = 1; // Speed multiplier
+        let lapTime = "1:40"; // Lap time display
+
+        // Calculate angle between three points to detect corners
+        function calculateAngle(p1, p2, p3) {
+            const angle1 = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+            const angle2 = Math.atan2(p3[1] - p2[1], p3[0] - p2[0]);
+            let angleDiff = angle2 - angle1;
+            
+            // Normalize angle to -π to π
+            while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+            while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+            
+            return Math.abs(angleDiff);
+        }
+
+        // Determine speed based on track curvature
+        function getSpeedForPoint(pointIndex) {
+            const totalPoints = trackCoordinates.length;
+            
+            // Get previous, current, and next points (with wrapping)
+            const prev = trackCoordinates[(pointIndex - 1 + totalPoints) % totalPoints];
+            const current = trackCoordinates[pointIndex];
+            const next = trackCoordinates[(pointIndex + 1) % totalPoints];
+            
+            // Calculate angle change
+            const angle = calculateAngle(prev, current, next);
+            
+            // Convert angle to degrees for easier understanding
+            const angleDegrees = angle * (180 / Math.PI);
+            
+            // Slow down for sharp corners
+            if (angleDegrees > 45) {
+                return 0.3; // Very slow for sharp turns
+            } else if (angleDegrees > 25) {
+                return 0.6; // Slow for medium turns
+            } else if (angleDegrees > 15) {
+                return 0.8; // Moderate for gentle turns
+            } else {
+                return 1.0; // Full speed for straights
+            }
+        }
+
+        // Draw the track
+        function drawTrack() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Calculate bounds
+            let minLat = 90, maxLat = -90, minLng = 180, maxLng = -180;
+            trackCoordinates.forEach(coord => {
+                minLat = Math.min(minLat, coord[1]);
+                maxLat = Math.max(maxLat, coord[1]);
+                minLng = Math.min(minLng, coord[0]);
+                maxLng = Math.max(maxLng, coord[0]);
+            });
+            
+            // Add padding
+            const latPadding = (maxLat - minLat) * 0.1;
+            const lngPadding = (maxLng - minLng) * 0.1;
+            minLat -= latPadding;
+            maxLat += latPadding;
+            minLng -= lngPadding;
+            maxLng += lngPadding;
+            
+            // Calculate scale to fit in canvas
+            const latRange = maxLat - minLat;
+            const lngRange = maxLng - minLng;
+            const scale = Math.min(canvas.width / lngRange, canvas.height / latRange);
+            
+            // Calculate offset to center
+            const offsetX = (canvas.width - lngRange * scale) / 2;
+            const offsetY = (canvas.height - latRange * scale) / 2;
+            
+            // Draw track path
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            trackCoordinates.forEach((coord, index) => {
+                const x = (coord[0] - minLng) * scale + offsetX;
+                // Flip Y coordinate: canvas Y increases downward, but we want latitude to increase upward
+                const y = canvas.height - ((coord[1] - minLat) * scale + offsetY);
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+        }
+
+        // Draw the red dot at current position
+        function drawDot() {
+            // Calculate bounds and scale (same as track)
+            let minLat = 90, maxLat = -90, minLng = 180, maxLng = -180;
+            trackCoordinates.forEach(coord => {
+                minLat = Math.min(minLat, coord[1]);
+                maxLat = Math.max(maxLat, coord[1]);
+                minLng = Math.min(minLng, coord[0]);
+                maxLng = Math.max(maxLng, coord[0]);
+            });
+            
+            const latPadding = (maxLat - minLat) * 0.1;
+            const lngPadding = (maxLng - minLng) * 0.1;
+            minLat -= latPadding;
+            maxLat += latPadding;
+            minLng -= lngPadding;
+            maxLng += lngPadding;
+            
+            const latRange = maxLat - minLat;
+            const lngRange = maxLng - minLng;
+            const scale = Math.min(canvas.width / lngRange, canvas.height / latRange);
+            
+            const offsetX = (canvas.width - lngRange * scale) / 2;
+            const offsetY = (canvas.height - latRange * scale) / 2;
+            
+            // Get current position
+            const coord = trackCoordinates[currentPoint];
+            const x = (coord[0] - minLng) * scale + offsetX;
+            // Flip Y coordinate to match track drawing
+            const y = canvas.height - ((coord[1] - minLat) * scale + offsetY);
+            
+            // Draw red dot
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Animation loop
+        function animate() {
+            drawTrack();
+            drawDot();
+            
+            // Get speed for current point
+            currentSpeed = getSpeedForPoint(currentPoint);
+            
+            // Move to next point based on speed
+            currentPoint += currentSpeed;
+            if (currentPoint >= trackCoordinates.length) {
+                currentPoint = 0;
+            }
+            
+            if (isRunning) {
+                animationId = requestAnimationFrame(animate);
+            }
+        }
+
+        // Start animation
+        function startAnimation() {
+            if (!isRunning) {
+                isRunning = true;
+                animate();
+            }
+        }
+
+        // Stop animation
+        function stopAnimation() {
+            isRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        }
+
+        // Reset animation
+        function resetAnimation() {
+            stopAnimation();
+            currentPoint = 0;
+            currentSpeed = 1;
+            drawTrack();
+            drawDot();
+            document.getElementById('lapTimeDisplay').textContent = lapTime;
+        }
+
+        // Initialize
+        drawTrack();
+        drawDot();
+        document.getElementById('lapTimeDisplay').textContent = lapTime;
+    </script>
+</body>
+</html>

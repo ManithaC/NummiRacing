@@ -3,459 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nummi Racing - Focal Point Tool</title>
+    <title>Nummi Racing - Driver/Crew Eye Focal Point Tool</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            margin: 20px;
             background: #1a1a1a;
             color: white;
         }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
         h1 {
-            color: #7A9292;
             text-align: center;
-            margin-bottom: 30px;
+            color: #7899a0;
         }
-        
         .instructions {
-            background: #2c2c2c;
+            background: #2a2a2a;
             padding: 20px;
             border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 4px solid #7A9292;
+            margin-bottom: 20px;
         }
-        
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
-        
-        .image-item {
-            background: #2c2c2c;
+        .image-container {
+            background: #2a2a2a;
+            padding: 20px;
             border-radius: 10px;
-            padding: 15px;
             text-align: center;
         }
-        
-        .image-container {
+        .image-container h3 {
+            margin-bottom: 15px;
+            color: #7899a0;
+        }
+        .image-wrapper {
             position: relative;
             display: inline-block;
             cursor: crosshair;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            overflow: hidden;
+            border: 2px solid #7899a0;
+            border-radius: 5px;
         }
-        
-        .image-container:hover {
-            border-color: #7A9292;
-        }
-        
-        .image-container img {
+        .image-wrapper img {
             max-width: 100%;
             height: auto;
             display: block;
         }
-        
         .focal-point {
             position: absolute;
             width: 20px;
             height: 20px;
-            background: #B3402D;
+            background: red;
             border: 2px solid white;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             cursor: move;
-            z-index: 10;
+            display: none;
         }
-        
-        .focal-point:hover {
-            background: #ff4444;
+        .focal-point.active {
+            display: block;
         }
-        
-        .image-info {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-        
         .coordinates {
-            background: #1a1a1a;
-            padding: 10px;
-            border-radius: 5px;
             margin-top: 10px;
             font-family: monospace;
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
         }
-        
         .export-section {
-            background: #2c2c2c;
+            background: #2a2a2a;
             padding: 20px;
             border-radius: 10px;
-            text-align: center;
+            margin-bottom: 20px;
         }
-        
-        .export-btn {
-            background: #7A9292;
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #7899a0;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 5px;
             cursor: pointer;
-            margin: 10px;
+            font-size: 16px;
         }
-        
-        .export-btn:hover {
-            background: #6a8282;
+        .btn:hover {
+            background: #697576;
         }
-        
-        .export-btn:disabled {
-            background: #555;
-            cursor: not-allowed;
+        .css-output {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
         }
-        
         .preview-section {
-            background: #2c2c2c;
+            background: #2a2a2a;
             padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
         }
-        
-        .preview-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
         }
-        
         .preview-item {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
             text-align: center;
         }
-        
         .preview-item img {
-            width: 150px;
+            width: 100%;
             height: 150px;
             object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #7A9292;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
-        
-        .preview-item h4 {
-            margin: 10px 0 5px 0;
-            color: #7A9292;
-        }
-        
-        .preview-item p {
-            margin: 0;
+        .preview-item .focal-info {
             font-size: 12px;
-            opacity: 0.8;
+            color: #ccc;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎯 Focal Point Tool - Nummi Racing</h1>
+        <h1>🎯 Nummi Racing - Driver/Crew Eye Focal Point Tool</h1>
         
         <div class="instructions">
-            <h3>How to use:</h3>
+            <h3>Instructions:</h3>
             <ol>
-                <li><strong>Click on the eyes</strong> of each driver/crew member to set the focal point</li>
-                <li>The red dot shows where the focal point is set</li>
-                <li>You can drag the focal point to adjust if needed</li>
-                <li>Click "Export CSS" to get the CSS for your website</li>
-                <li>Preview how images will look with different object-position values</li>
+                <li><strong>Click on the eyes</strong> of each team member to set the focal point</li>
+                <li>The red dot shows where the image will be centered when cropped</li>
+                <li>You can <strong>drag the red dot</strong> to fine-tune the position</li>
+                <li>Use the <strong>Export CSS</strong> button to get the CSS code</li>
+                <li>Copy the CSS into your <code>styles.css</code> file</li>
             </ol>
         </div>
-        
-        <div class="image-grid" id="image-grid">
-            <!-- Images will be loaded here -->
+
+        <div class="image-grid">
+            <!-- Amando -->
+            <div class="image-container">
+                <h3>Amando Widjaja (Race Strategy)</h3>
+                <div class="image-wrapper" data-person="amando widjaja">
+                    <img src="images/amando_web.jpg" alt="Amando Widjaja" draggable="false">
+                    <div class="focal-point" data-person="amando widjaja"></div>
+                </div>
+                <div class="coordinates">
+                    <strong>Focal Point:</strong> <span id="amando widjaja-coords">Not set</span>
+                </div>
+            </div>
+
+            <!-- Paul -->
+            <div class="image-container">
+                <h3>Paul Joakim (Driver)</h3>
+                <div class="image-wrapper" data-person="paul joakim">
+                    <img src="images/paul.jpg" alt="Paul Joakim" draggable="false">
+                    <div class="focal-point" data-person="paul joakim"></div>
+                </div>
+                <div class="coordinates">
+                    <strong>Focal Point:</strong> <span id="paul joakim-coords">Not set</span>
+                </div>
+            </div>
         </div>
-        
+
         <div class="export-section">
             <h3>Export Focal Points</h3>
-            <button class="export-btn" id="export-css">Export CSS</button>
-            <button class="export-btn" id="export-json">Export JSON</button>
-            <button class="export-btn" id="clear-all">Clear All</button>
+            <div class="export-buttons">
+                <button class="btn" onclick="exportCSS()">Export CSS</button>
+                <button class="btn" onclick="exportJSON()">Export JSON</button>
+                <button class="btn" onclick="clearAll()">Clear All</button>
+            </div>
+            <div class="css-output" id="css-output">Click "Export CSS" to generate the CSS code...</div>
         </div>
-        
+
         <div class="preview-section">
-            <h3>Preview Different Sizes</h3>
-            <div class="preview-container" id="preview-container">
-                <!-- Preview images will be generated here -->
+            <h3>Preview with Focal Points</h3>
+            <div class="preview-grid" id="preview-grid">
+                <!-- Preview items will be generated here -->
             </div>
         </div>
     </div>
 
     <script>
-        // Sample driver/crew images - replace with your actual image paths
-        const images = [
-            { name: 'Adam', path: 'images/adam.jpg', focalPoint: null },
-            { name: 'Jason', path: 'images/jason.jpg', focalPoint: null },
-            { name: 'Joseph', path: 'images/joseph.jpg', focalPoint: null },
-            { name: 'Luke', path: 'images/luke.jpg', focalPoint: null },
-            { name: 'Manitha', path: 'images/manitha.jpg', focalPoint: null },
-            { name: 'Nick', path: 'images/nick.jpg', focalPoint: null },
-            { name: 'Patrick', path: 'images/patrick.jpg', focalPoint: null },
-            { name: 'Paul', path: 'images/paul.jpg', focalPoint: null },
-            { name: 'Vinh', path: 'images/vinh.jpg', focalPoint: null }
-        ];
-
         let focalPoints = {};
+        let isDragging = false;
+        let currentDragElement = null;
 
         // Initialize the tool
-        function initFocalPointTool() {
-            const imageGrid = document.getElementById('image-grid');
+        document.addEventListener('DOMContentLoaded', function() {
+            setupImageListeners();
+            updatePreview();
+        });
+
+        function setupImageListeners() {
+            const imageWrappers = document.querySelectorAll('.image-wrapper');
             
-            images.forEach((image, index) => {
-                const imageItem = document.createElement('div');
-                imageItem.className = 'image-item';
+            imageWrappers.forEach(wrapper => {
+                const img = wrapper.querySelector('img');
+                const focalPoint = wrapper.querySelector('.focal-point');
+                const person = wrapper.dataset.person;
                 
-                imageItem.innerHTML = `
-                    <h3>${image.name}</h3>
-                    <div class="image-container" data-index="${index}">
-                        <img src="${image.path}" alt="${image.name}" onload="imageLoaded(this, ${index})">
-                    </div>
-                    <div class="image-info">
-                        <div class="coordinates">
-                            Focal Point: <span id="coords-${index}">Not set</span>
-                        </div>
-                        <p>Click on the eyes to set focal point</p>
-                    </div>
-                `;
-                
-                imageGrid.appendChild(imageItem);
+                // Click to set focal point
+                wrapper.addEventListener('click', function(e) {
+                    if (e.target === img) {
+                        const rect = img.getBoundingClientRect();
+                        const x = ((e.clientX - rect.left) / rect.width) * 100;
+                        const y = ((e.clientY - rect.top) / rect.height) * 100;
+                        
+                        setFocalPoint(person, x, y);
+                    }
+                });
+
+                // Drag functionality
+                focalPoint.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    currentDragElement = focalPoint;
+                    e.preventDefault();
+                });
             });
-            
-            // Add click event listeners
-            imageGrid.addEventListener('click', handleImageClick);
-            
-            // Initialize export buttons
-            document.getElementById('export-css').addEventListener('click', exportCSS);
-            document.getElementById('export-json').addEventListener('click', exportJSON);
-            document.getElementById('clear-all').addEventListener('click', clearAll);
+
+            // Global mouse events for dragging
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
         }
 
-        // Handle image loading
-        function imageLoaded(img, index) {
-            // Store image dimensions for calculations
-            images[index].width = img.naturalWidth;
-            images[index].height = img.naturalHeight;
-        }
-
-        // Handle image clicks to set focal points
-        function handleImageClick(e) {
-            if (e.target.tagName === 'IMG') {
-                const container = e.target.parentElement;
-                const index = parseInt(container.dataset.index);
-                const rect = container.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Convert to percentage
-                const xPercent = Math.round((x / rect.width) * 100);
-                const yPercent = Math.round((y / rect.height) * 100);
-                
-                setFocalPoint(index, xPercent, yPercent);
-            }
-        }
-
-        // Set focal point for an image
-        function setFocalPoint(index, x, y) {
-            focalPoints[index] = { x, y };
-            images[index].focalPoint = { x, y };
+        function handleMouseMove(e) {
+            if (!isDragging || !currentDragElement) return;
             
-            // Update display
-            updateFocalPointDisplay(index, x, y);
+            const wrapper = currentDragElement.closest('.image-wrapper');
+            const img = wrapper.querySelector('img');
+            const rect = img.getBoundingClientRect();
+            
+            const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+            const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+            
+            const person = wrapper.dataset.person;
+            setFocalPoint(person, x, y);
+        }
+
+        function handleMouseUp() {
+            isDragging = false;
+            currentDragElement = null;
+        }
+
+        function setFocalPoint(person, x, y) {
+            focalPoints[person] = { x: x, y: y };
+            
+            const focalPoint = document.querySelector(`[data-person="${person}"] .focal-point`);
+            const coordsSpan = document.getElementById(`${person}-coords`);
+            
+            focalPoint.style.left = x + '%';
+            focalPoint.style.top = y + '%';
+            focalPoint.classList.add('active');
+            
+            coordsSpan.textContent = `${x.toFixed(1)}%, ${y.toFixed(1)}%`;
+            
             updatePreview();
         }
 
-        // Update focal point visual display
-        function updateFocalPointDisplay(index, x, y) {
-            const container = document.querySelector(`[data-index="${index}"]`);
-            const existingPoint = container.querySelector('.focal-point');
-            
-            if (existingPoint) {
-                existingPoint.remove();
-            }
-            
-            const focalPoint = document.createElement('div');
-            focalPoint.className = 'focal-point';
-            focalPoint.style.left = x + '%';
-            focalPoint.style.top = y + '%';
-            
-            // Make focal point draggable
-            makeDraggable(focalPoint, index);
-            
-            container.appendChild(focalPoint);
-            
-            // Update coordinates display
-            document.getElementById(`coords-${index}`).textContent = `${x}% ${y}%`;
-        }
-
-        // Make focal point draggable
-        function makeDraggable(element, index) {
-            let isDragging = false;
-            let startX, startY, startLeft, startTop;
-            
-            element.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                startLeft = parseFloat(element.style.left);
-                startTop = parseFloat(element.style.top);
-                e.preventDefault();
-            });
-            
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                
-                const deltaX = e.clientX - startX;
-                const deltaY = e.clientY - startY;
-                
-                const container = element.parentElement;
-                const rect = container.getBoundingClientRect();
-                
-                const newLeft = startLeft + (deltaX / rect.width) * 100;
-                const newTop = startTop + (deltaY / rect.height) * 100;
-                
-                // Constrain to image bounds
-                const clampedLeft = Math.max(0, Math.min(100, newLeft));
-                const clampedTop = Math.max(0, Math.min(100, newTop));
-                
-                element.style.left = clampedLeft + '%';
-                element.style.top = clampedTop + '%';
-                
-                // Update focal point data
-                focalPoints[index] = { x: Math.round(clampedLeft), y: Math.round(clampedTop) };
-                images[index].focalPoint = { x: Math.round(clampedLeft), y: Math.round(clampedTop) };
-                
-                document.getElementById(`coords-${index}`).textContent = `${Math.round(clampedLeft)}% ${Math.round(clampedTop)}%`;
-                
-                updatePreview();
-            });
-            
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-        }
-
-        // Update preview section
-        function updatePreview() {
-            const previewContainer = document.getElementById('preview-container');
-            previewContainer.innerHTML = '';
-            
-            const sizes = [
-                { name: 'Small (150x150)', width: 150, height: 150 },
-                { name: 'Medium (300x300)', width: 300, height: 300 },
-                { name: 'Large (400x400)', width: 400, height: 400 }
-            ];
-            
-            sizes.forEach(size => {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'preview-item';
-                
-                const img = document.createElement('img');
-                img.src = images[0].path; // Use first image for preview
-                img.style.width = size.width + 'px';
-                img.style.height = size.height + 'px';
-                
-                if (focalPoints[0]) {
-                    img.style.objectPosition = `${focalPoints[0].x}% ${focalPoints[0].y}%`;
-                }
-                
-                previewItem.innerHTML = `
-                    <h4>${size.name}</h4>
-                    <img src="${images[0].path}" alt="Preview" style="width: ${size.width}px; height: ${size.height}px; object-fit: cover; object-position: ${focalPoints[0] ? focalPoints[0].x + '% ' + focalPoints[0].y + '%' : '50% 50%'};">
-                    <p>object-position: ${focalPoints[0] ? focalPoints[0].x + '% ' + focalPoints[0].y + '%' : '50% 50%'}</p>
-                `;
-                
-                previewContainer.appendChild(previewItem);
-            });
-        }
-
-        // Export CSS
         function exportCSS() {
             let css = '/* Focal Point CSS for Nummi Racing Driver/Crew Images */\n\n';
             
-            Object.keys(focalPoints).forEach(index => {
-                const point = focalPoints[index];
-                const image = images[index];
-                css += `/* ${image.name} */\n`;
-                css += `.driver-card[data-driver="${image.name.toLowerCase()}"] img,\n`;
-                css += `.crew-card[data-crew="${image.name.toLowerCase()}"] img {\n`;
-                css += `    object-position: ${point.x}% ${point.y}%;\n`;
+            Object.keys(focalPoints).forEach(person => {
+                const point = focalPoints[person];
+                css += `/* ${person.charAt(0).toUpperCase() + person.slice(1)} */\n`;
+                css += `.driver-card[data-driver="${person}"] img,\n`;
+                css += `.crew-card[data-crew="${person}"] img {\n`;
+                css += `    object-position: ${point.x.toFixed(1)}% ${point.y.toFixed(1)}% !important;\n`;
                 css += `}\n\n`;
             });
             
-            // Copy to clipboard
-            navigator.clipboard.writeText(css).then(() => {
-                alert('CSS copied to clipboard!');
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = css;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('CSS copied to clipboard!');
+            css += `/* Responsive adjustments if needed */\n`;
+            css += `@media (max-width: 768px) {\n`;
+            Object.keys(focalPoints).forEach(person => {
+                const point = focalPoints[person];
+                css += `    .driver-card[data-driver="${person}"] img,\n`;
+                css += `    .crew-card[data-crew="${person}"] img {\n`;
+                css += `        object-position: ${point.x.toFixed(1)}% ${(point.y * 0.8).toFixed(1)}% !important;\n`;
+                css += `    }\n`;
             });
+            css += `}\n`;
+            
+            document.getElementById('css-output').textContent = css;
         }
 
-        // Export JSON
         function exportJSON() {
             const data = {
                 focalPoints: focalPoints,
-                images: images.map((img, index) => ({
-                    name: img.name,
-                    path: img.path,
-                    focalPoint: focalPoints[index] || null
-                }))
+                exportDate: new Date().toISOString()
             };
             
-            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'nummi-focal-points.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            focalPoints = {};
+            document.querySelectorAll('.focal-point').forEach(point => {
+                point.classList.remove('active');
+            });
+            document.querySelectorAll('.coordinates span').forEach(span => {
+                span.textContent = 'Not set';
+            });
+            updatePreview();
+            document.getElementById('css-output').textContent = 'Click "Export CSS" to generate the CSS code...';
+        }
+
+        function updatePreview() {
+            const previewGrid = document.getElementById('preview-grid');
+            previewGrid.innerHTML = '';
             
-            // Copy to clipboard
-            navigator.clipboard.writeText(json).then(() => {
-                alert('JSON data copied to clipboard!');
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = json;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('JSON data copied to clipboard!');
+            Object.keys(focalPoints).forEach(person => {
+                const point = focalPoints[person];
+                const previewItem = document.createElement('div');
+                previewItem.className = 'preview-item';
+                
+                // Determine the correct image path
+                let imagePath;
+                if (person === 'amando widjaja') {
+                    imagePath = 'images/amando_web.jpg';
+                } else if (person === 'paul joakim') {
+                    imagePath = 'images/paul.jpg';
+                } else {
+                    imagePath = `images/${person}.jpg`;
+                }
+                
+                previewItem.innerHTML = `
+                    <img src="${imagePath}" alt="${person}" style="object-position: ${point.x}% ${point.y}%;">
+                    <div class="focal-info">
+                        <strong>${person.charAt(0).toUpperCase() + person.slice(1)}</strong><br>
+                        ${point.x.toFixed(1)}%, ${point.y.toFixed(1)}%
+                    </div>
+                `;
+                
+                previewGrid.appendChild(previewItem);
             });
         }
-
-        // Clear all focal points
-        function clearAll() {
-            if (confirm('Are you sure you want to clear all focal points?')) {
-                focalPoints = {};
-                images.forEach((img, index) => {
-                    img.focalPoint = null;
-                    const container = document.querySelector(`[data-index="${index}"]`);
-                    const existingPoint = container.querySelector('.focal-point');
-                    if (existingPoint) {
-                        existingPoint.remove();
-                    }
-                    document.getElementById(`coords-${index}`).textContent = 'Not set';
-                });
-                updatePreview();
-            }
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', initFocalPointTool);
     </script>
 </body>
 </html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nummi Racing - Amatuer Endurance Racing Team</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/vag-rounded" rel="stylesheet">
+    
+    <!-- Hotjar Tracking Code for Site 6501565 (name missing) -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:6501565,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-text">Welcome to</h1>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+                    <div class="nav-logo">
+            <a href="#home">
+                <img src="images/nummi.png" alt="Nummi Racing" class="nav-logo-img">
+            </a>
+        </div>
+            <div class="nav-menu" id="nav-menu">
+            <a href="#about" class="nav-link">Who Are We</a>
+            <a href="#crew" class="nav-link">Our Crew</a>
+            <a href="#drivers" class="nav-link">Our Drivers</a>
+            <a href="#car" class="nav-link">The Car</a>
+                            <a href="#schedule" class="nav-link">Upcoming Races</a>
+            <a href="#results" class="nav-link">Results</a>
+            <a href="#sponsors" class="nav-link">Sponsors</a>
+            <a href="#contact" class="nav-link">Connect</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+                    <img src="images/nummi.png" alt="Nummi Racing" class="hero-logo">
+        </div>
+        <div class="hero-background"></div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section id="countdown" class="countdown-section">
+        <div class="container">
+            <h2>Upcoming Races</h2>
+            <div class="countdown-container">
+                <!-- Race 1 Countdown -->
+                <div class="countdown-race" id="countdown-race1">
+                    <div class="race-details">
+                        <h3>Enduro Elite Race 8</h3>
+                        <p>Shannonville Motorsports Park</p>
+                        <p>September 26, 2025 at 1:00 PM EST</p>
+                    </div>
+                    <div class="countdown-timer">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="months1">00</span>
+                            <span class="countdown-label">Months</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days1">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours1">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes1">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds1">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Race 2 Countdown -->
+                <div class="countdown-race" id="countdown-race2">
+                    <div class="race-details">
+                        <h3>NASA 25hrs of Ozarks</h3>
+                        <p>Ozarks International Raceway</p>
+                        <p>November 15, 2025 at 11:00 AM CT</p>
+                    </div>
+                    <div class="countdown-timer">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="months2">00</span>
+                            <span class="countdown-label">Months</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days2">00</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours2">00</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes2">00</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds2">00</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>Who Are We</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Nummi racing formed in 2020 in the height of the pandemic. Driver, Patrick Alex, a racing & Subaru BRZ enthusiast and engineer at General Motors Canada, casually reached out to Vinh Pham as they had crossed paths previously at autocross events and Toyota 86 forums about starting a racing team; and endurance racing team. He suggested using Adam (Mann Motorsports) 2013 Scion FRS as a baseline, Adam had been a foreman at a London, ON Toyota dealership and had known of Vinh from previous years when Vinh worked as a technical rep for Toyota Canada Inc.</p>
+                    
+                    <p>Add to the mix Patrick's co worker at GM, Hung Nguyen who had previously competed in Ontario 1500 (an event that Vinh was also crewing at) and the grassroots amateur GM x Toyota collab was born. Harken back to the OG GMxToyota collab: New United Motor Manufacturing (a plant that is now used by Tesla) and that the team was using Mann Motorsports' car…. NUMMI or new united Mann Motorsports International was born.</p>
+                    
+                    <p>We're here to have fun, good vibes and take on the challenges of 8+ hour sports car races with very very limited student & salary-person budgets. We are nummi racing.</p>
+                </div>
+                <div class="about-image">
+                    <img src="images/team-photo.jpg" alt="Nummi Racing Team" id="team-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Movie Section -->
+    <section id="highlights" class="video-section">
+        <div class="container">
+            <h2>Our Story</h2>
+            <p>Experience the journey of Nummi Racing through the lens of <a href="https://www.instagram.com/octanevision/" target="_blank" class="instagram-link"><i class="fab fa-instagram"></i>@octanevision</a></p>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/swgQvlwt8AI" 
+                    title="Nummi Racing Team Movie"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crew Section -->
+    <section id="crew" class="crew-section">
+        <div class="container">
+            <h2>Our Crew</h2>
+            <div class="crew-grid" id="crew-grid">
+                <!-- Crew will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Drivers Section -->
+    <section id="drivers" class="drivers-section">
+        <div class="container">
+            <h2>Our Drivers</h2>
+            <div class="drivers-grid" id="drivers-grid">
+                <!-- Drivers will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- The Car Section -->
+    <section id="car" class="car-section">
+        <div class="container">
+            <h2>The Car</h2>
+            <div class="car-content">
+                <div class="car-details">
+                    <h3>Toyota 86</h3>
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Engine:</span>
+                            <span class="spec-value">2.4L naturally aspirated boxer 4 cylinder; FA24</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Horsepower:</span>
+                            <span class="spec-value">200hp</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">ECU:</span>
+                            <span class="spec-value">LINK ECU G5</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Tire:</span>
+                            <span class="spec-value">Continental Extremecontact Force</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Front Tire Size:</span>
+                            <span class="spec-value">255/45R17</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Rear Tire Size:</span>
+                            <span class="spec-value">255/45R17</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Suspension:</span>
+                            <span class="spec-value">MCS Motion Control Suspension 2Way</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Brakes:</span>
+                            <span class="spec-value">AP Racing</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Oil Pan:</span>
+                            <span class="spec-value">Formula Delta</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Curb Weight:</span>
+                            <span class="spec-value">Very Light</span>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="car-gallery">
+                    <img src="images/car-main.jpg" alt="Nummi Racing Toyota 86" id="car-main-image">
+                    <div class="car-thumbnails" id="car-thumbnails">
+                        <!-- Car thumbnails will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="schedule-section">
+        <div class="container">
+            <h2>Upcoming Races</h2>
+            <div class="schedule-content">
+                <div class="upcoming-races">
+
+                    <div class="races-list" id="upcoming-races">
+                        <!-- Upcoming races will be populated by JavaScript -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section" style="display: none;">
+        <div class="container">
+            <h2>Race Gallery</h2>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All Races</button>
+                <button class="filter-btn" data-filter="race1">Race 1</button>
+                <button class="filter-btn" data-filter="race2">Race 2</button>
+                <button class="filter-btn" data-filter="race3">Race 3</button>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Gallery images will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results-section">
+        <div class="container">
+            <h2>Results</h2>
+            <div class="results-content">
+                <div class="results-overview">
+                    <div class="digital-stats">
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="1">0</span>
+                            <span class="counter-label">Championship Win</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="5">0</span>
+                            <span class="counter-label">Race Wins</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="16">0</span>
+                            <span class="counter-label">Podiums</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="250">0</span>
+                            <span class="counter-label">Hours Racing</span>
+                        </div>
+                        <div class="stat-line">
+                            <span class="counter-number" data-target="33">0</span>
+                            <span class="counter-label">Endurance Races</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-container">
+                    <div class="season">
+                        <h3><span class="season-year">2024 GT1 Championship</span><span class="season-dash"> - </span><span class="season-position bronze">3rd</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.24"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.25"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.16"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.26"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="0"></canvas>
+                                </div>
+                                <div class="race-position dnf">DNF</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 7</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.39"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 8</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville Pro</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-pro" data-lap-time="1.38"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 9</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="season-divider"></div>
+
+                    <div class="season">
+                        <h3><span class="season-year">2023 GT1 Championship</span><span class="season-dash"> - </span><span class="season-position gold">1st</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.24"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.25"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.16"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.39"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.37"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 7</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.18"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 8</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.19"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 9</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="season-divider"></div>
+
+                    <div class="season">
+                        <h3><span class="season-year">2022 GT1 Championship</span><span class="season-dash"> - </span><span class="season-position bronze">3rd</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.26"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.27"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Mosport GP</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="mosport" data-lap-time="1.28"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.18"></canvas>
+                                </div>
+                                <div class="race-position p6">P6</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.41"></canvas>
+                                </div>
+                                <div class="race-position p4">P4</div>
+                                <div class="race-number">Race 7</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.19"></canvas>
+                                </div>
+                                <div class="race-position p7">P7</div>
+                                <div class="race-number">Race 8</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.20"></canvas>
+                                </div>
+                                <div class="race-position p12">P12</div>
+                                <div class="race-number">Race 9</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="season-divider"></div>
+
+                    <div class="season">
+                        <h3><span class="season-year">2021 GT2 Championship</span><span class="season-dash"> - </span><span class="season-position silver">2nd</span></h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.20"></canvas>
+                                </div>
+                                <div class="race-position p5">P5</div>
+                                <div class="race-number">Race 1</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.19"></canvas>
+                                </div>
+                                <div class="race-position p3">P3</div>
+                                <div class="race-number">Race 2</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-long" data-lap-time="1.42"></canvas>
+                                </div>
+                                <div class="race-position p2">P2</div>
+                                <div class="race-number">Race 3</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Shannonville GT1</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="smp-pro" data-lap-time="1.40"></canvas>
+                                </div>
+                                <div class="race-position p4">P4</div>
+                                <div class="race-number">Race 4</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.18"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 5</div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="track-name">Calabogie GT2</div>
+                                <div class="track-map">
+                                    <canvas class="track-canvas" width="400" height="300" data-track="calabogie" data-lap-time="1.17"></canvas>
+                                </div>
+                                <div class="race-position p1">P1</div>
+                                <div class="race-number">Race 6</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section id="sponsors" class="sponsors-section">
+        <div class="container">
+            <h2>Our Sponsors</h2>
+            <div class="sponsors-grid" id="sponsors-grid">
+                <!-- Sponsors will be populated by JavaScript -->
+            </div>
+            
+            <!-- Become a Sponsor Button and Form -->
+            <div class="become-sponsor-container">
+                <button id="become-sponsor-btn" class="become-sponsor-btn">
+                    <i class="fas fa-plus"></i>
+                    Become a Sponsor
+                </button>
+                
+                <div id="sponsor-form" class="sponsor-form" style="display: none;">
+                    <h3>Interested in Sponsoring Nummi Racing?</h3>
+                    <p>Fill out the form below and we'll get back to you!</p>
+                    
+                    <form id="sponsor-contact-form" action="https://formspree.io/f/mqadzlwk" method="POST">
+                        <div class="form-group">
+                            <label for="sponsor-email">Email *</label>
+                            <input type="email" id="sponsor-email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsor-company">Company Name *</label>
+                            <input type="text" id="sponsor-company" name="company" required>
+                        </div>
+                        
+                        <div class="sponsor-email-field" style="display: none;">
+                            <input type="email" name="_replyto" value="nummiracing45@gmail.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsor-product">Product Type</label>
+                            <input type="text" id="sponsor-product" name="product" placeholder="e.g., Performance Parts, Apparel, etc.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsor-message">Message</label>
+                            <textarea id="sponsor-message" name="message" rows="5" placeholder="Tell us about your company and how you'd like to partner with Nummi Racing..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" id="cancel-sponsor-btn" class="btn btn-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Connect</h2>
+            <div class="connect-buttons">
+                <a href="https://www.facebook.com/nummi.racing/" class="connect-btn facebook-btn" target="_blank" rel="noopener">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.instagram.com/nummi_racing/#" class="connect-btn instagram-btn" target="_blank" rel="noopener">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.youtube.com/@NUMMIRacing" class="connect-btn youtube-btn" target="_blank" rel="noopener">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="mailto:nummi.racing45@gmail.com" class="connect-btn email-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Us</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <script src="script.js?v=1.1"></script>
+</body>
+</html>

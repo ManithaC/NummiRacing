@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Trace Tool - Generate SVG Track Layouts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: #2d2d2d;
+            padding: 1rem;
+            border-bottom: 2px solid #444;
+        }
+
+        .header h1 {
+            text-align: center;
+            color: #00ff88;
+            font-size: 1.8rem;
+        }
+
+        .controls {
+            background: #2d2d2d;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #444;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #333;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .search-box input::placeholder {
+            color: #aaa;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #00cc6a;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #555;
+        }
+
+        .btn-danger {
+            background: #ff4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #cc3333;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .map-container {
+            flex: 2;
+            background: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+        }
+
+        .drawing-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        .drawing-controls button {
+            margin: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .sidebar {
+            flex: 1;
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-width: 300px;
+        }
+
+        .status {
+            background: #333;
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .instructions {
+            background: #333;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .instructions h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .instructions ol {
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .path-output {
+            background: #333;
+            padding: 1rem;
+            border-radius: 4px;
+            flex: 1;
+            overflow: auto;
+        }
+
+        .path-output h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        #path-output {
+            background: #000;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 1rem;
+            width: 100%;
+            min-height: 200px;
+            overflow: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #00ff88;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .download-section {
+            background: #333;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .download-section h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .track-info {
+            background: #333;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .track-info h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .track-info input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #444;
+            color: white;
+        }
+
+        .track-info input::placeholder {
+            color: #aaa;
+        }
+
+        .custom-marker {
+            background: none;
+            border: none;
+            font-size: 24px;
+            text-align: center;
+            line-height: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏁 Track Trace Tool</h1>
+    </div>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Enter coordinates (e.g., '43.9578, -78.6747') or track name (e.g., 'Mosport')">
+        </div>
+        <button class="btn btn-primary" onclick="searchTrack()">Search Track</button>
+        <button class="btn btn-secondary" onclick="clearDrawing()">Clear Drawing</button>
+        <button class="btn btn-danger" onclick="resetMap()">Reset Map</button>
+    </div>
+
+    <div class="main-content">
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="drawing-controls">
+                <button class="btn btn-primary" onclick="toggleDrawing(event)">✏️ Draw Mode</button>
+                <button class="btn btn-secondary" onclick="finishDrawing(event)">✅ Finish Track</button>
+                <button class="btn btn-danger" onclick="toggleDeleteMode(event)">🗑️ Delete Mode</button>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="status">
+                <h3>Status</h3>
+                <div id="status-text">Ready to search for tracks</div>
+            </div>
+
+            <div class="instructions">
+                <h3>How to Use</h3>
+                <ol>
+                    <li>Search for a race track using the search box</li>
+                    <li>Click "Draw Mode" to start tracing the track</li>
+                    <li>Click on the map to place points along the track layout</li>
+                    <li>Click "Finish Track" when done</li>
+                    <li>Download the raw path coordinates</li>
+                </ol>
+            </div>
+
+            <div class="track-info">
+                <h3>Track Information</h3>
+                <input type="text" id="track-name" placeholder="Track Name (e.g., Mosport GP)">
+                <input type="text" id="track-location" placeholder="Location (e.g., Bowmanville, Ontario)">
+                <input type="text" id="track-length" placeholder="Track Length (e.g., 3.957 km)">
+            </div>
+
+            <div class="path-output">
+                <h3>Raw Path Coordinates</h3>
+                <div id="path-output">Path coordinates will appear here after drawing</div>
+            </div>
+
+            <div class="download-section">
+                <h3>Download</h3>
+                <button class="btn btn-primary" onclick="downloadPath()" id="download-btn" disabled>Download Path Data</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let map;
+        let currentPolyline;
+        let isDrawingMode = false;
+        let isDeleteMode = false;
+        let trackPoints = [];
+        let markers = [];
+        let searchResults = [];
+
+        function initMap() {
+            // Initialize map centered on a default location (Toronto area)
+            map = L.map('map', {
+                maxZoom: 20,  // Allow much closer zoom
+                minZoom: 3    // Prevent zooming out too far
+            }).setView([43.6532, -79.3832], 10);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 20
+            }).addTo(map);
+
+            // Add satellite view option
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '© Esri',
+                maxZoom: 20
+            }).addTo(map);
+
+            // Add click listener for manual drawing and deleting
+            map.on('click', function(event) {
+                if (isDrawingMode) {
+                    addTrackPoint(event.latlng);
+                } else if (isDeleteMode) {
+                    deleteNearestPoint(event.latlng);
+                }
+            });
+
+            updateStatus('Map loaded. Search for a track to begin. You can now zoom in much closer for precise track tracing.');
+        }
+
+        function searchTrack() {
+            const query = document.getElementById('search-input').value.trim();
+            if (!query) {
+                updateStatus('Please enter coordinates (e.g., "43.9578, -78.6747") or track name.');
+                return;
+            }
+
+            updateStatus('Searching for location...');
+
+            // Check if input is coordinates (lat, lng format)
+            const coordMatch = query.match(/^(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)$/);
+            
+            if (coordMatch) {
+                const lat = parseFloat(coordMatch[1]);
+                const lng = parseFloat(coordMatch[2]);
+                
+                // Validate coordinate ranges
+                if (lat < -90 || lat > 90) {
+                    updateStatus('Invalid latitude. Must be between -90 and 90.');
+                    return;
+                }
+                if (lng < -180 || lng > 180) {
+                    updateStatus('Invalid longitude. Must be between -180 and 180.');
+                    return;
+                }
+                
+                // Center map on the coordinates
+                map.setView([lat, lng], 16);
+                
+                // Clear previous markers
+                clearMarkers();
+                
+                // Add marker for the location
+                const marker = L.marker([lat, lng], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: '📍',
+                        iconSize: [32, 32],
+                        iconAnchor: [16, 16]
+                    })
+                }).addTo(map);
+                
+                markers.push(marker);
+                
+                // Add popup with coordinate info
+                marker.bindPopup(`<b>Coordinates</b><br>Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}<br>Click "Draw Mode" to start tracing.`);
+                
+                updateStatus(`Found coordinates: ${lat.toFixed(6)}, ${lng.toFixed(6)}. Click "Draw Mode" to start tracing.`);
+                
+            } else {
+                // Check predefined racing locations
+                const racingLocations = {
+                    'mosport': { lat: 43.9578, lng: -78.6747, name: 'Canadian Tire Motorsport Park (Mosport)' },
+                    'shannonville': { lat: 44.1833, lng: -77.2500, name: 'Shannonville Motorsport Park' },
+                    'calabogie': { lat: 45.2833, lng: -76.7167, name: 'Calabogie Motorsports Park' },
+                    'montreal': { lat: 45.5088, lng: -73.5878, name: 'Circuit Gilles Villeneuve' },
+                    'toronto': { lat: 43.6532, lng: -79.3832, name: 'Toronto Area' },
+                    'bowmanville': { lat: 43.9578, lng: -78.6747, name: 'Canadian Tire Motorsport Park' },
+                    'ontario': { lat: 43.6532, lng: -79.3832, name: 'Ontario Racing Region' }
+                };
+
+                const queryLower = query.toLowerCase();
+                let foundLocation = null;
+                
+                for (const [key, location] of Object.entries(racingLocations)) {
+                    if (queryLower.includes(key)) {
+                        foundLocation = location;
+                        break;
+                    }
+                }
+
+                if (foundLocation) {
+                    // Center map on the found location
+                    map.setView([foundLocation.lat, foundLocation.lng], 16);
+                    
+                    // Clear previous markers
+                    clearMarkers();
+                    
+                    // Add marker for the track
+                    const marker = L.marker([foundLocation.lat, foundLocation.lng], {
+                        icon: L.divIcon({
+                            className: 'custom-marker',
+                            html: '🏁',
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 16]
+                        })
+                    }).addTo(map);
+                    
+                    markers.push(marker);
+                    
+                    // Add popup with track info
+                    marker.bindPopup(`<b>${foundLocation.name}</b><br>Click "Draw Mode" to start tracing.`);
+                    
+                    updateStatus(`Found: ${foundLocation.name}. Click "Draw Mode" to start tracing the track layout.`);
+                } else {
+                    updateStatus('Location not found. Enter coordinates (e.g., "43.9578, -78.6747") or try "Mosport", "Shannonville", "Calabogie".');
+                }
+            }
+        }
+
+        function toggleDrawing(event) {
+            // Turn off delete mode if it's active
+            if (isDeleteMode) {
+                isDeleteMode = false;
+                const deleteBtn = document.querySelector('.drawing-controls .btn-danger');
+                deleteBtn.textContent = '🗑️ Delete Mode';
+                deleteBtn.style.background = '#ff4444';
+            }
+            
+            isDrawingMode = !isDrawingMode;
+            const btn = event.target;
+            
+            if (isDrawingMode) {
+                btn.textContent = '✏️ Drawing...';
+                btn.style.background = '#ff4444';
+                updateStatus('Drawing mode active. Click on the map to place track points.');
+            } else {
+                btn.textContent = '✏️ Draw Mode';
+                btn.style.background = '#00ff88';
+                updateStatus('Drawing mode disabled.');
+            }
+        }
+
+        function toggleDeleteMode(event) {
+            // Turn off drawing mode if it's active
+            if (isDrawingMode) {
+                isDrawingMode = false;
+                const drawBtn = document.querySelector('.drawing-controls .btn-primary');
+                drawBtn.textContent = '✏️ Draw Mode';
+                drawBtn.style.background = '#00ff88';
+            }
+            
+            isDeleteMode = !isDeleteMode;
+            const btn = event.target;
+            
+            if (isDeleteMode) {
+                btn.textContent = '🗑️ Deleting...';
+                btn.style.background = '#ff8800';
+                updateStatus('Delete mode active. Click near a point to delete it.');
+            } else {
+                btn.textContent = '🗑️ Delete Mode';
+                btn.style.background = '#ff4444';
+                updateStatus('Delete mode disabled.');
+            }
+        }
+
+        function deleteNearestPoint(clickLatlng) {
+            if (trackPoints.length === 0) {
+                updateStatus('No points to delete.');
+                return;
+            }
+
+            // Find the nearest point to the click
+            let nearestIndex = 0;
+            let nearestDistance = Infinity;
+            
+            trackPoints.forEach((point, index) => {
+                const distance = map.distance(clickLatlng, point);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestIndex = index;
+                }
+            });
+
+            // Only delete if click is within reasonable distance (50 meters)
+            if (nearestDistance > 50) {
+                updateStatus('Click closer to a point to delete it.');
+                return;
+            }
+
+            // Remove the point
+            trackPoints.splice(nearestIndex, 1);
+            
+            // Remove the corresponding marker
+            if (markers[nearestIndex]) {
+                map.removeLayer(markers[nearestIndex]);
+                markers.splice(nearestIndex, 1);
+            }
+
+            // Update the polyline
+            if (currentPolyline) {
+                map.removeLayer(currentPolyline);
+            }
+
+            if (trackPoints.length > 1) {
+                currentPolyline = L.polyline(trackPoints, {
+                    color: '#00ff88',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(map);
+            }
+
+            updateStatus(`Deleted point ${nearestIndex + 1}. ${trackPoints.length} points remaining.`);
+        }
+
+        function addTrackPoint(latlng) {
+            if (!isDrawingMode) return;
+
+            trackPoints.push(latlng);
+            
+            // Add marker for the point
+            const marker = L.circleMarker(latlng, {
+                radius: 6,
+                fillColor: '#00ff88',
+                color: '#000',
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(map);
+            
+            markers.push(marker);
+            
+            // Update polyline
+            if (currentPolyline) {
+                map.removeLayer(currentPolyline);
+            }
+
+            if (trackPoints.length > 1) {
+                currentPolyline = L.polyline(trackPoints, {
+                    color: '#00ff88',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(map);
+            }
+
+            updateStatus(`Added point ${trackPoints.length}. Continue clicking or click "Finish Track" when done.`);
+        }
+
+        function finishDrawing(event) {
+            if (trackPoints.length < 3) {
+                updateStatus('Need at least 3 points to create a track. Add more points.');
+                return;
+            }
+
+            isDrawingMode = false;
+            isDeleteMode = false;
+            
+            const drawBtn = document.querySelector('.drawing-controls .btn-primary');
+            const deleteBtn = document.querySelector('.drawing-controls .btn-danger');
+            
+            drawBtn.textContent = '✏️ Draw Mode';
+            drawBtn.style.background = '#00ff88';
+            deleteBtn.textContent = '🗑️ Delete Mode';
+            deleteBtn.style.background = '#ff4444';
+
+            generatePath();
+            updateStatus(`Track completed with ${trackPoints.length} points. Raw path data generated!`);
+        }
+
+        function clearDrawing() {
+            trackPoints = [];
+            if (currentPolyline) {
+                map.removeLayer(currentPolyline);
+                currentPolyline = null;
+            }
+            
+            clearMarkers();
+            
+            // Reset modes directly
+            isDrawingMode = false;
+            isDeleteMode = false;
+            
+            const drawBtn = document.querySelector('.drawing-controls .btn-primary');
+            const deleteBtn = document.querySelector('.drawing-controls .btn-danger');
+            
+            drawBtn.textContent = '✏️ Draw Mode';
+            drawBtn.style.background = '#00ff88';
+            deleteBtn.textContent = '🗑️ Delete Mode';
+            deleteBtn.style.background = '#ff4444';
+            
+            updateStatus('Drawing cleared. Ready to start new track.');
+        }
+
+        function clearMarkers() {
+            markers.forEach(marker => {
+                if (marker && map.hasLayer(marker)) {
+                    map.removeLayer(marker);
+                }
+            });
+            markers = [];
+        }
+
+        function resetMap() {
+            clearDrawing();
+            map.setView([43.6532, -79.3832], 10);
+            updateStatus('Map reset to default location.');
+        }
+
+        function generatePath() {
+            if (trackPoints.length < 3) return;
+
+            // Generate raw path data
+            const rawPath = trackPoints.map(point => `${point.lng},${point.lat}`).join(' ');
+            
+            // Generate formatted output
+            const pathOutput = `Raw Track Path Coordinates:
+            
+Latitude,Longitude pairs:
+${rawPath}
+
+Track Statistics:
+- Total Points: ${trackPoints.length}
+- Bounds: ${Math.min(...trackPoints.map(p => p.lat)).toFixed(6)} to ${Math.max(...trackPoints.map(p => p.lat)).toFixed(6)} lat, ${Math.min(...trackPoints.map(p => p.lng)).toFixed(6)} to ${Math.max(...trackPoints.map(p => p.lng)).toFixed(6)} lng
+
+Copy the coordinates above to use in your own applications.`;
+
+            document.getElementById('path-output').textContent = pathOutput;
+            document.getElementById('download-btn').disabled = false;
+        }
+
+        function downloadPath() {
+            const pathOutput = document.getElementById('path-output');
+            const pathText = pathOutput.textContent;
+            
+            if (!pathText || pathText === 'Path coordinates will appear here after drawing') {
+                updateStatus('No path data to download. Draw a track first.');
+                return;
+            }
+
+            const trackName = document.getElementById('track-name').value || 'race-track';
+            const blob = new Blob([pathText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${trackName.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-path.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            updateStatus('Path data downloaded successfully!');
+        }
+
+        function updateStatus(message) {
+            document.getElementById('status-text').textContent = message;
+        }
+
+        // Initialize map when page loads
+        window.onload = function() {
+            initMap();
+        };
+    </script>
+
+    <!-- Leaflet CSS and JS (no API key required) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</body>
+</html>

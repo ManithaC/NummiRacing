@@ -65,6 +65,10 @@ document.addEventListener('DOMContentLoaded', function() {
     startCountdown();
     setupScrollAnimations();
 
+    // Initialize track canvases after a delay to ensure DOM is ready
+    setTimeout(() => {
+        initializeTrackCanvases();
+    }, 2000);
 });
 
 // Initialize website components
@@ -85,6 +89,17 @@ function initializeWebsite() {
     renderMerch();
     renderSponsors();
     renderSocialLinks();
+    
+    // Setup easter eggs after a small delay to ensure DOM is ready
+    setTimeout(() => {
+        console.log('Delayed easter egg setup...');
+        setupEasterEggs();
+    }, 1000);
+    
+    // Setup digital counter animations
+    setTimeout(() => {
+        setupDigitalCounters();
+    }, 1500);
 }
 
 // Load default data structure - now using actual team data
@@ -144,21 +159,29 @@ function loadDefaultData() {
             {
                 id: 1,
                 name: "Adam Mann",
-                role: "Chief Mechanic",
-                image: "images/adam.jpg",
+                role: "Technical Director",
+                image: "images/adam.jpg?v=3",
                 bio: "Tinkering with cars from a small age, Adam has been building winning race cars for over a decade. Father of two girls and Tech Support in the Product Quality area of Toyota Canada Inc. Adam has a busy schedule ensuring all things run smoothly at nummi racing. With decades of experience as a technician and shop foreman, Adam's prowess turning wrenches and problem solving are key to the wisdom gained on the 86 chassis. An agile and straight forward thinker, Adam's no stranger to tough motorsport challenges. He enjoys endurance and sportscar racing while relaxing by the campfire. Adam daily drives a Toyota Tundra & Toyota Prius PHEV.",
-                instagram: "mann.motorsport"
+                instagram: "mann_motorsports"
             },
             {
                 id: 2,
                 name: "Joseph Yang",
-                role: "Data Analyst",
+                role: "Race Engineer",
                 image: "images/joseph.jpg",
                 bio: "",
                 instagram: "jsph.yang"
             },
             {
                 id: 3,
+                name: "Amando Widjaja",
+                role: "Race Strategy",
+                image: "images/amando_web.jpg",
+                bio: "",
+                instagram: ""
+            },
+            {
+                id: 4,
                 name: "Luke Pham",
                 role: "Crew",
                 image: "images/luke.jpg",
@@ -166,7 +189,7 @@ function loadDefaultData() {
                 instagram: "lukephamracing"
             },
             {
-                id: 4,
+                id: 5,
                 name: "Manitha Chandrasena",
                 role: "Intern",
                 image: "images/manitha.jpg",
@@ -207,18 +230,24 @@ function loadDefaultData() {
             },
             {
                 id: 3,
-                name: "XII MOTORSPORTS",
-                logo: "images/xii.png",
-                website: "https://www.xiiimotorsports.com/"
+                name: "MannMotorsports",
+                logo: "images/mann.jpg",
+                website: "#"
             },
             {
                 id: 4,
+                name: "VP Engineering & Electrical",
+                logo: "images/vpsponsor_web.png",
+                website: "#"
+            },
+            {
+                id: 5,
                 name: "SPEEDACADEMY",
                 logo: "images/speedacademy.png",
                 website: "http://speed.academy/"
             },
             {
-                id: 5,
+                id: 6,
                 name: "OCTANE VISION",
                 logo: "images/octane.png",
                 website: "https://www.youtube.com/@Octane.Vision"
@@ -261,42 +290,7 @@ function setupEventListeners() {
     // Setup sponsor form functionality
     setupSponsorForm();
     
-    // Dark mode toggle
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const darkModeIcon = document.getElementById('dark-mode-icon');
-    
-    if (darkModeToggle && darkModeIcon) {
-        // Check for saved dark mode preference
-        const darkMode = localStorage.getItem('darkMode');
-        if (darkMode === 'light') {
-            document.body.classList.add('light-mode');
-            switchThemeIcon(darkModeIcon, true);
-        } else {
-            switchThemeIcon(darkModeIcon, false);
-        }
-        
-        // Toggle dark/light mode
-        darkModeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('light-mode');
-            
-                            if (document.body.classList.contains('light-mode')) {
-                    localStorage.setItem('darkMode', 'light');
-                    switchThemeIcon(darkModeIcon, true);
-                } else {
-                    localStorage.setItem('darkMode', 'dark');
-                    switchThemeIcon(darkModeIcon, false);
-                }
-        });
-        
-        // Function to switch theme icons
-        function switchThemeIcon(iconElement, isLightMode) {
-            if (isLightMode) {
-                iconElement.textContent = '☀'; // Sun for light mode
-            } else {
-                iconElement.textContent = '☾'; // Moon for dark mode
-            }
-        }
-    }
+
     
     // Smooth scrolling for navigation links
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -1034,4 +1028,606 @@ function setupSponsorForm() {
             submitBtn.disabled = false;
         });
     });
+}
+
+// Setup easter eggs
+function setupEasterEggs() {
+    console.log('Setting up easter eggs...');
+    
+    // Vinh's card easter egg - 5 flips in 5 seconds changes image to vpee
+    let vinhTapCount = 0;
+    let vinhTapTimer = null;
+    let vinhOriginalImage = null;
+    let vinhCard = null;
+    
+    // Find Vinh's card (both in drivers and crew sections)
+    const vinhDriverCard = document.querySelector('.driver-card[data-driver="vinh pham"]');
+    const vinhCrewCard = document.querySelector('.crew-card[data-crew="vinh pham"]');
+    
+    console.log('Vinh driver card found:', vinhDriverCard);
+    console.log('Vinh crew card found:', vinhCrewCard);
+    
+    if (vinhDriverCard) {
+        vinhCard = vinhDriverCard;
+        vinhOriginalImage = vinhDriverCard.querySelector('img').src;
+        console.log('Setting up easter egg for Vinh driver card');
+        setupVinhEasterEgg(vinhDriverCard, vinhOriginalImage);
+    }
+    
+    if (vinhCrewCard) {
+        vinhCard = vinhCrewCard;
+        vinhOriginalImage = vinhCrewCard.querySelector('img').src;
+        console.log('Setting up easter egg for Vinh crew card');
+        setupVinhEasterEgg(vinhCrewCard, vinhOriginalImage);
+    }
+    
+    console.log('Easter egg setup complete');
+}
+
+function setupVinhEasterEgg(card, originalImage) {
+    let flipCount = 0;
+    let flipTimer = null;
+    
+    console.log('=== SETUP VINH EASTER EGG ===');
+    console.log('Setting up Vinh easter egg for card:', card);
+    console.log('Original image:', originalImage);
+    console.log('Card element:', card.outerHTML);
+    
+    // Watch for actual card flips by monitoring the flipped class
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const isFlipped = card.classList.contains('flipped');
+                if (isFlipped) {
+                    flipCount++;
+                    console.log('Vinh card flipped! Flip count:', flipCount);
+                    
+                    // Clear existing timer
+                    if (flipTimer) {
+                        clearTimeout(flipTimer);
+                    }
+                    
+                    // Set timer to reset flip count after 5 seconds
+                    flipTimer = setTimeout(() => {
+                        console.log('5 seconds passed, resetting flip count');
+                        flipCount = 0;
+                    }, 5000);
+                    
+                    // Every 5th flip triggers the easter egg
+                    if (flipCount === 5) {
+                        console.log('5th flip! Triggering easter egg...');
+                        const img = card.querySelector('img');
+                        console.log('Current image src:', img.src);
+                        
+                        if (img.src.includes('vinh.jpg')) {
+                            console.log('Changing to vpee image...');
+                            // Change to vpee image
+                            img.src = 'images/VPEE.jpg';
+                            img.alt = 'Vpee Easter Egg';
+                            
+                            // Reset after 5 seconds
+                            setTimeout(() => {
+                                console.log('Resetting to original image...');
+                                img.src = originalImage;
+                                img.alt = 'Vinh Pham';
+                            }, 5000);
+                        } else {
+                            console.log('Image is not vinh.jpg, current src:', img.src);
+                        }
+                        flipCount = 0; // Reset counter after easter egg
+                    }
+                }
+            }
+        });
+    });
+    
+    // Start observing the card for class changes
+    observer.observe(card, { attributes: true });
+}
+
+// Setup digital counter animations
+function setupDigitalCounters() {
+    const counters = document.querySelectorAll('.counter-number');
+    const animationOrder = [1, 5, 16, 250, 33]; // Order we want them to animate
+    let currentAnimationIndex = 0;
+    let animationStarted = false;
+    
+    counters.forEach((counter) => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 1200; // 1.2 seconds (reduced from 2 seconds)
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+        
+        const updateCounter = () => {
+            current += increment;
+            if (current < target) {
+                counter.textContent = Math.floor(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                // Special case for hours racing - show 250+ at the end
+                if (target === 250) {
+                    counter.textContent = '250+';
+                } else {
+                    counter.textContent = target;
+                }
+                
+                // When this counter finishes, start the next one
+                currentAnimationIndex++;
+                if (currentAnimationIndex < animationOrder.length) {
+                    startNextAnimation();
+                }
+            }
+        };
+        
+        // Store the update function for later use
+        counter.updateCounter = updateCounter;
+    });
+    
+    // Function to start the next animation in sequence
+    function startNextAnimation() {
+        const nextTarget = animationOrder[currentAnimationIndex];
+        const nextCounter = Array.from(counters).find(counter => 
+            parseInt(counter.getAttribute('data-target')) === nextTarget
+        );
+        
+        if (nextCounter && nextCounter.updateCounter) {
+            nextCounter.updateCounter();
+        }
+    }
+    
+    // Start animation when element comes into view and user has scrolled to it
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !animationStarted) {
+                // Only start the first animation (Championship Win = 1) when scrolled to
+                const target = parseInt(entry.target.getAttribute('data-target'));
+                if (target === 1) {
+                    animationStarted = true;
+                    entry.target.updateCounter();
+                }
+            }
+        });
+    }, {
+        threshold: 0.5 // Trigger when 50% of the section is visible
+    });
+    
+    counters.forEach(counter => observer.observe(counter));
+}
+
+// Track drawing functionality for results page
+function initializeTrackCanvases() {
+    // SMP Pro track coordinates (from the path file)
+    const smpProCoordinates = [
+        [-77.15940169908536, 44.22500133703493],
+        [-77.15985781230157, 44.22489946628535],
+        [-77.16028172929077, 44.22476491974215],
+        [-77.16060905759886, 44.2246745811763],
+        [-77.16105980477722, 44.22466112648443],
+        [-77.16157762742854, 44.22468803586509],
+        [-77.1618003179988, 44.22479567326485],
+        [-77.16228594442312, 44.22512242845135],
+        [-77.16235033687718, 44.225293493678606],
+        [-77.16276083877177, 44.22594699671136],
+        [-77.16291108783123, 44.226154578509394],
+        [-77.1631954878366, 44.22622377227941],
+        [-77.16379648407442, 44.22629488801382],
+        [-77.16434650295278, 44.22629488801382],
+        [-77.16488310673654, 44.22627758959984],
+        [-77.16521043504464, 44.22626221322759],
+        [-77.16633730299057, 44.22617764310843],
+        [-77.16669951054459, 44.22613728005419],
+        [-77.16708318225, 44.226179565157956],
+        [-77.16738368036891, 44.22633525096],
+        [-77.16754734452294, 44.22650631266277],
+        [-77.16762246905267, 44.22671965858425],
+        [-77.16756075961754, 44.226900329300435],
+        [-77.16749368414457, 44.22719439853564],
+        [-77.16744538980404, 44.227528828429456],
+        [-77.16749636716351, 44.227669134658186],
+        [-77.16847298604995, 44.22802085976149],
+        [-77.16867152944994, 44.22809197332477],
+        [-77.16876543511212, 44.228211136400375],
+        [-77.16875470303643, 44.22830146953885],
+        [-77.16859372190132, 44.22835336298123],
+        [-77.16814834076077, 44.22843024207105],
+        [-77.16115470804822, 44.22943734887378],
+        [-77.16075829427837, 44.229364314990505],
+        [-77.16073683012704, 44.229337407747515],
+        [-77.16056511691623, 44.22922593475261],
+        [-77.16031291313784, 44.22896454897114],
+        [-77.15982460369463, 44.228583999949414],
+        [-77.15946507915949, 44.22818999458198],
+        [-77.1593658074595, 44.227972810007934],
+        [-77.15942751689464, 44.227767156619514],
+        [-77.15947312821626, 44.22762877262664],
+        [-77.15948386029193, 44.22742504004506],
+        [-77.15945434708384, 44.227227072804425],
+        [-77.15938458859193, 44.22704063702729],
+        [-77.1592869186891, 44.22673503483701],
+        [-77.1592278922729, 44.22646210575352],
+        [-77.15919569604587, 44.22628527778444],
+        [-77.15909910736477, 44.225977749616526],
+        [-77.15880934132156, 44.22598159372853],
+        [-77.15836932621886, 44.22602772305314],
+        [-77.15799906960807, 44.22595468493917],
+        [-77.15785418658645, 44.2257586348167],
+        [-77.15790248092698, 44.225577960596304],
+        [-77.15806346206213, 44.22535500015567],
+        [-77.15837469225669, 44.22527042873315],
+        [-77.1593996054837, 44.22500133703493]
+    ];
+
+    // Mosport GP track coordinates (from the mosport.txt file)
+    const mosportCoordinates = [
+        [-78.67389462399622, 44.05426044773033],
+        [-78.6736505478353, 44.054199726588124],
+        [-78.67330846292313, 44.054113945820795],
+        [-78.67311394405152, 44.05406768198457],
+        [-78.67287917989611, 44.05401852661901],
+        [-78.67242038366099, 44.05384792826901],
+        [-78.67229025724343, 44.05375732781555],
+        [-78.67197231950153, 44.05347588722497],
+        [-78.67192536667045, 44.05340938223252],
+        [-78.67183951006507, 44.05324456519018],
+        [-78.67179658176237, 44.05310769922747],
+        [-78.67179658176237, 44.05303637458632],
+        [-78.67178316666778, 44.052871556505885],
+        [-78.67178719119616, 44.05278095455869],
+        [-78.67182475346102, 44.0526614368844],
+        [-78.67187036478265, 44.052534208127355],
+        [-78.67192268365156, 44.05243493095287],
+        [-78.67207561572991, 44.05218914694075],
+        [-78.67219098554344, 44.05207444738602],
+        [-78.67225940252585, 44.051999266044746],
+        [-78.67248745913398, 44.05171492549354],
+        [-78.67256660819206, 44.05160215276126],
+        [-78.67270545214568, 44.05143540294308],
+        [-78.67277789365649, 44.051333232302305],
+        [-78.67288789743215, 44.05120792844561],
+        [-78.67299521818892, 44.051094190869264],
+        [-78.67316156536188, 44.05090527034445],
+        [-78.67344864838618, 44.050537066365294],
+        [-78.67365792386185, 44.05024404376192],
+        [-78.67369816914564, 44.0501592211588],
+        [-78.67375987858078, 44.05004355377696],
+        [-78.67378402575106, 44.04995294750339],
+        [-78.67382963707266, 44.04983535192038],
+        [-78.67382695405374, 44.04972739511402],
+        [-78.6738054899024, 44.04954425365319],
+        [-78.67375719556185, 44.04936496725351],
+        [-78.67370890122133, 44.049289782472805],
+        [-78.67363914272943, 44.0491625464726],
+        [-78.67358279933214, 44.04906037191094],
+        [-78.67347279555648, 44.04890614582368],
+        [-78.67338157291323, 44.04880782648344],
+        [-78.67305961064298, 44.04856684701814],
+        [-78.67297375403756, 44.048514795324884],
+        [-78.67281008988351, 44.048464671428874],
+        [-78.67256593516188, 44.04838177412316],
+        [-78.67215811628625, 44.0483104437905],
+        [-78.67169127099436, 44.0482776703656],
+        [-78.67124320683493, 44.048237185521586],
+        [-78.6708273389025, 44.04821212346143],
+        [-78.67022365964574, 44.048188989242625],
+        [-78.66968437284308, 44.04813308150991],
+        [-78.66948582944308, 44.04806560658981],
+        [-78.66918533132416, 44.04789209929943],
+        [-78.66909679169986, 44.04779570614071],
+        [-78.66905118037823, 44.04772437510227],
+        [-78.66901361811335, 44.04764147676048],
+        [-78.66897068981066, 44.04755279468502],
+        [-78.66896264075389, 44.04745254522242],
+        [-78.6689492256593, 44.04732337739549],
+        [-78.66895727471608, 44.04722698331128],
+        [-78.66898142188633, 44.047113238090105],
+        [-78.6690323992458, 44.0469782858495],
+        [-78.6691021577377, 44.04687803541459],
+        [-78.66916118415391, 44.046802847477075],
+        [-78.66926313887281, 44.04668331773891],
+        [-78.66934631245931, 44.04659077842113],
+        [-78.66945095019713, 44.04648088779348],
+        [-78.66960924831334, 44.0463459341122],
+        [-78.6698051086944, 44.04623411511481],
+        [-78.67039805587548, 44.04590251270896],
+        [-78.6705858671998, 44.04578876494449],
+        [-78.67096148984844, 44.04556898050966],
+        [-78.6715249238214, 44.04522580669124],
+        [-78.67204274647273, 44.0449269739379],
+        [-78.6722386068538, 44.04480551245242],
+        [-78.67237544081866, 44.04466477105462],
+        [-78.67257398421866, 44.04442763068278],
+        [-78.67273228233488, 44.04421555312338],
+        [-78.6728771653565, 44.043945635131536],
+        [-78.67291472762133, 44.04382609962792],
+        [-78.67296033894296, 44.04367764390866],
+        [-78.6729522898862, 44.04351954779854],
+        [-78.67294155781055, 44.04328047483066],
+        [-78.6728905804511, 44.04307996127491],
+        [-78.6728530181862, 44.042800397973174],
+        [-78.67279667478891, 44.04251504924265],
+        [-78.67281545592134, 44.042372374361975],
+        [-78.67291741064028, 44.042229699137714],
+        [-78.67302741441596, 44.042169929684896],
+        [-78.67320181064565, 44.04212172846933],
+        [-78.67337084083753, 44.042090879670766],
+        [-78.67355328612402, 44.04208316746865],
+        [-78.6737357314105, 44.04208509551927],
+        [-78.67386988235646, 44.042114016271206],
+        [-78.67393427481049, 44.042241267411946],
+        [-78.67395573896185, 44.04241671929412],
+        [-78.67395573896185, 44.042617235094646],
+        [-78.67396915405645, 44.042829318375915],
+        [-78.67400939934024, 44.04301248059874],
+        [-78.67415696538077, 44.04331903505201],
+        [-78.67430721444022, 44.043546539847206],
+        [-78.6744896597267, 44.043750907816616],
+        [-78.67478210878885, 44.044036250594495],
+        [-78.67523285596722, 44.044429558657114],
+        [-78.67540725219695, 44.04460114812119],
+        [-78.6757721427699, 44.0448961266001],
+        [-78.6761558144753, 44.04522387874283],
+        [-78.67653948618069, 44.045541989382485],
+        [-78.67672729750501, 44.04571357562435],
+        [-78.67699023335905, 44.04592179196943],
+        [-78.67723438808068, 44.04620519637423],
+        [-78.67743024846175, 44.046417266810614],
+        [-78.67791319186715, 44.04696093482484],
+        [-78.67833710885631, 44.04749881422626],
+        [-78.67878517301574, 44.04801933802873],
+        [-78.67916884472115, 44.048489733382155],
+        [-78.67928153151574, 44.04868637295546],
+        [-78.67943982963193, 44.04890421799504],
+        [-78.67956861454005, 44.04921074195938],
+        [-78.6797161805806, 44.04947678034067],
+        [-78.67985033152654, 44.04982185733036],
+        [-78.68019375794813, 44.05068357712334],
+        [-78.6802876636103, 44.05094189784022],
+        [-78.68044322768365, 44.05129082179589],
+        [-78.6805076201377, 44.051485524325074],
+        [-78.68054518240255, 44.051641671435455],
+        [-78.68057201259175, 44.05189227704838],
+        [-78.68055323145931, 44.05209083305027],
+        [-78.68048078994852, 44.05226432804099],
+        [-78.68033054088906, 44.05251300330795],
+        [-78.68026078239717, 44.052597822540065],
+        [-78.68018297484852, 44.052694207883626],
+        [-78.68009980126202, 44.05278288226113],
+        [-78.67988515974851, 44.05292938746353],
+        [-78.67964100502691, 44.05305661537162],
+        [-78.6793378238891, 44.05315685534908],
+        [-78.6790963521864, 44.053201192208064],
+        [-78.6787851219918, 44.05324360134649],
+        [-78.67836388802156, 44.05327251665072],
+        [-78.67804192575129, 44.05334191332329],
+        [-78.67772532951886, 44.05350383857634],
+        [-78.6775723974405, 44.053632992925046],
+        [-78.67749995592969, 44.053792989712704],
+        [-78.6773738540405, 44.053997322331064],
+        [-78.67728799743509, 44.05423442439129],
+        [-78.67722360498105, 44.054330807071224],
+        [-78.67712165026212, 44.05451007843867],
+        [-78.67702774459997, 44.054596822453874],
+        [-78.67688822761619, 44.05468163870145],
+        [-78.67661455968647, 44.054781875928356],
+        [-78.67642674836215, 44.05476838246537],
+        [-78.67625235213244, 44.05474332316884],
+        [-78.67607527288378, 44.05472019150112],
+        [-78.67586063137027, 44.05467007285669],
+        [-78.67389329261056, 44.054261411557505]
+    ];
+
+    // Track data mapping with existing coordinates
+    const trackData = {
+        'smp-pro': smpProCoordinates,
+        'mosport': mosportCoordinates
+    };
+
+    // Load track coordinates from files and initialize all canvases
+    loadTrackCoordinates().then(fileTrackData => {
+        // Merge file data with existing data
+        const mergedTrackData = { ...trackData, ...fileTrackData };
+        
+        // Draw track on all canvases and setup dot animations
+        const trackCanvases = document.querySelectorAll('.track-canvas');
+        trackCanvases.forEach(canvas => {
+            const trackType = canvas.getAttribute('data-track');
+            const coordinates = mergedTrackData[trackType];
+            
+            if (coordinates && coordinates.length > 0) {
+                drawTrackOnCanvas(canvas, coordinates);
+            } else {
+                console.warn(`No coordinates found for track type: ${trackType}`);
+            }
+        });
+    }).catch(error => {
+        console.error('Error loading track coordinates:', error);
+        // Fallback to existing coordinates only
+        const trackCanvases = document.querySelectorAll('.track-canvas');
+        trackCanvases.forEach(canvas => {
+            const trackType = canvas.getAttribute('data-track');
+            const coordinates = trackData[trackType];
+            
+            if (coordinates) {
+                drawTrackOnCanvas(canvas, coordinates);
+            }
+        });
+    });
+}
+
+// Function to load track coordinates from text files
+async function loadTrackCoordinates() {
+    console.log('=== STARTING TRACK COORDINATE LOADING ===');
+    
+    const trackFiles = {
+        'smp-long': 'smp-long.txt',
+        'calabogie': 'calabogie.txt'
+    };
+    
+    const trackData = {};
+    
+    console.log('Track files to load:', trackFiles);
+    
+    for (const [trackType, filename] of Object.entries(trackFiles)) {
+        try {
+            console.log(`\n--- Loading ${trackType} from ${filename} ---`);
+            const response = await fetch(filename);
+            console.log(`${trackType} response status:`, response.status);
+            console.log(`${trackType} response ok:`, response.ok);
+            
+            if (response.ok) {
+                const text = await response.text();
+                console.log(`${trackType} file content length:`, text.length);
+                console.log(`${trackType} file content (first 200 chars):`, text.substring(0, 200));
+                
+                const coordinates = parseTrackCoordinates(text);
+                console.log(`${trackType}: Parsed ${coordinates.length} coordinates`);
+                
+                if (coordinates.length > 0) {
+                    trackData[trackType] = coordinates;
+                    console.log(`${trackType}: SUCCESS - Added to trackData`);
+                    console.log(`${trackType}: First coordinate:`, coordinates[0]);
+                    console.log(`${trackType}: Last coordinate:`, coordinates[coordinates.length - 1]);
+                } else {
+                    console.warn(`${trackType}: FAILED - No coordinates parsed from file`);
+                }
+            } else {
+                console.error(`FAILED to load ${filename}: HTTP ${response.status}`);
+            }
+        } catch (error) {
+            console.error(`ERROR loading ${filename}:`, error);
+        }
+    }
+    
+    console.log('\n=== FINAL TRACK DATA ===');
+    console.log('trackData keys:', Object.keys(trackData));
+    console.log('trackData:', trackData);
+    return trackData;
+}
+
+// Function to parse track coordinates from text file
+function parseTrackCoordinates(text) {
+    const lines = text.trim().split('\n');
+    const coordinates = [];
+    
+    // Look for the line that contains the actual coordinates
+    let coordinateLine = '';
+    for (const line of lines) {
+        if (line.includes('Latitude,Longitude pairs:')) {
+            // Get the next line which contains the coordinates
+            const index = lines.indexOf(line);
+            if (index + 1 < lines.length) {
+                coordinateLine = lines[index + 1];
+                break;
+            }
+        }
+    }
+    
+    if (coordinateLine) {
+        // Split by spaces and process each coordinate pair
+        const pairs = coordinateLine.trim().split(/\s+/);
+        
+        for (const pair of pairs) {
+            if (pair.includes(',')) {
+                const [lng, lat] = pair.split(',');
+                const longitude = parseFloat(lng);
+                const latitude = parseFloat(lat);
+                
+                if (!isNaN(longitude) && !isNaN(latitude)) {
+                    coordinates.push([longitude, latitude]);
+                }
+            }
+        }
+    }
+    
+    console.log(`Parsed ${coordinates.length} coordinates from track file`);
+    return coordinates;
+}
+
+function drawTrackOnCanvas(canvas, coordinates) {
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+    
+    // Calculate bounds
+    let minLat = 90, maxLat = -90, minLng = 180, maxLng = -180;
+    coordinates.forEach(coord => {
+        minLat = Math.min(minLat, coord[1]);
+        maxLat = Math.max(maxLat, coord[1]);
+        minLng = Math.min(minLng, coord[0]);
+        maxLng = Math.max(maxLng, coord[0]);
+    });
+    
+    // Add minimal padding to prevent cutoff
+    const latPadding = (maxLat - minLat) * 0.05;
+    const lngPadding = (maxLng - minLng) * 0.05;
+    minLat -= latPadding;
+    maxLat += latPadding;
+    minLng -= lngPadding;
+    maxLng += lngPadding;
+    
+    // Calculate scale based on the larger dimension to ensure consistent sizing
+    const latRange = maxLat - minLat;
+    const lngRange = maxLng - minLng;
+    const maxRange = Math.max(latRange, lngRange);
+    
+    // Use other tracks as the reference size, make Mosport 15% smaller
+    const trackType = canvas.getAttribute('data-track');
+    let scale;
+    
+    if (trackType === 'mosport') {
+        // Mosport size - 15% smaller than other tracks
+        scale = (Math.min(width, height) * 1.1) / maxRange; // Smaller size
+        console.log(`Mosport scaling: ${scale.toFixed(2)} (15% smaller than other tracks)`);
+    } else {
+        // All other tracks at full size
+        scale = (Math.min(width, height) * 1.3) / maxRange; // Moderate size
+        console.log(`${trackType} scaling: ${scale.toFixed(2)} (full size)`);
+    }
+    
+    // Log the scaling information for debugging
+    console.log(`${trackType}: latRange=${latRange.toFixed(6)}, lngRange=${lngRange.toFixed(6)}, scale=${scale.toFixed(2)}`);
+    
+    // Calculate offset to center
+    const offsetX = (width - lngRange * scale) / 2;
+    const offsetY = (height - latRange * scale) / 2;
+    
+    // Draw track path
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
+    ctx.beginPath();
+    coordinates.forEach((coord, index) => {
+        const x = (coord[0] - minLng) * scale + offsetX;
+        // Flip Y coordinate: canvas Y increases downward, but we want latitude to increase upward
+        const y = height - ((coord[1] - minLat) * scale + offsetY);
+        
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+    ctx.stroke();
+    
+    // Draw red dot at start/stop point
+    if (coordinates.length > 0) {
+        const startCoord = coordinates[0];
+        const startX = (startCoord[0] - minLng) * scale + offsetX;
+        const startY = height - ((startCoord[1] - minLat) * scale + offsetY);
+        
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(startX, startY, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Add a white border to make it stand out
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
 }
