@@ -251,6 +251,12 @@ function loadDefaultData() {
                 name: "OCTANE VISION",
                 logo: "images/octane.png",
                 website: "https://www.youtube.com/@Octane.Vision"
+            },
+            {
+                id: 7,
+                name: "BuildRegistry",
+                logo: "images/buildregistry_web.png",
+                website: "https://www.buildregistry.co"
             }
         ],
         socialLinks: {

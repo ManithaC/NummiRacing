@@ -1400,7 +1400,7 @@ section h2 {
 /* Sponsors Section */
 .sponsors-grid {
     display: grid;
-    grid-template-columns: repeat(3, 180px);
+    grid-template-columns: repeat(4, 180px);
     row-gap: 2rem;
     column-gap: 2rem;
     margin-top: 2rem;
@@ -1813,7 +1813,7 @@ section h2 {
     }
     
     .sponsors-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 180px);
     }
 
 
