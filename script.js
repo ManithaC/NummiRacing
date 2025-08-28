@@ -162,7 +162,7 @@ function loadDefaultData() {
                 role: "Technical Director",
                 image: "images/adam.jpg?v=3",
                 bio: "Tinkering with cars from a small age, Adam has been building winning race cars for over a decade. Father of two girls and Tech Support in the Product Quality area of Toyota Canada Inc. Adam has a busy schedule ensuring all things run smoothly at nummi racing. With decades of experience as a technician and shop foreman, Adam's prowess turning wrenches and problem solving are key to the wisdom gained on the 86 chassis. An agile and straight forward thinker, Adam's no stranger to tough motorsport challenges. He enjoys endurance and sportscar racing while relaxing by the campfire. Adam daily drives a Toyota Tundra & Toyota Prius PHEV.",
-                instagram: "mann_motorsports"
+                instagram: "mann.motorsport"
             },
             {
                 id: 2,
@@ -182,19 +182,19 @@ function loadDefaultData() {
             },
             {
                 id: 4,
+                name: "Manitha Chandrasena",
+                role: "Systems Engineer",
+                image: "images/manitha.jpg",
+                bio: "",
+                instagram: "manitha_c"
+            },
+            {
+                id: 5,
                 name: "Luke Pham",
                 role: "Crew",
                 image: "images/luke.jpg",
                 bio: "",
                 instagram: "lukephamracing"
-            },
-            {
-                id: 5,
-                name: "Manitha Chandrasena",
-                role: "Intern",
-                image: "images/manitha.jpg",
-                bio: "",
-                instagram: "manitha_c"
             }
         ],
         schedule: [
@@ -232,13 +232,13 @@ function loadDefaultData() {
                 id: 3,
                 name: "MannMotorsports",
                 logo: "images/mann.jpg",
-                website: "#"
+                website: "https://www.instagram.com/mann.motorsport/"
             },
             {
                 id: 4,
                 name: "VP Engineering & Electrical",
                 logo: "images/vpsponsor_web.png",
-                website: "#"
+                website: "https://www.instagram.com/vphamracing/"
             },
             {
                 id: 5,
@@ -1578,8 +1578,8 @@ function drawTrackOnCanvas(canvas, coordinates) {
     let scale;
     
     if (trackType === 'mosport') {
-        // Mosport size - 15% smaller than other tracks
-        scale = (Math.min(width, height) * 1.1) / maxRange; // Smaller size
+        // Mosport size - reduced by 5% to prevent cutoff
+        scale = (Math.min(width, height) * 1.045) / maxRange; // Smaller size
         console.log(`Mosport scaling: ${scale.toFixed(2)} (15% smaller than other tracks)`);
     } else {
         // All other tracks at full size
@@ -1614,20 +1614,261 @@ function drawTrackOnCanvas(canvas, coordinates) {
     });
     ctx.stroke();
     
-    // Draw red dot at start/stop point
-    if (coordinates.length > 0) {
+    // Draw start/finish line perpendicular to track
+    if (coordinates.length > 1) {
         const startCoord = coordinates[0];
+        const nextCoord = coordinates[1];
+        
         const startX = (startCoord[0] - minLng) * scale + offsetX;
         const startY = height - ((startCoord[1] - minLat) * scale + offsetY);
+        const nextX = (nextCoord[0] - minLng) * scale + offsetX;
+        const nextY = height - ((nextCoord[1] - minLat) * scale + offsetY);
         
-        ctx.fillStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(startX, startY, 6, 0, 2 * Math.PI);
-        ctx.fill();
+        // Calculate track direction
+        const trackDx = nextX - startX;
+        const trackDy = nextY - startY;
+        const trackLength = Math.sqrt(trackDx * trackDx + trackDy * trackDy);
         
-        // Add a white border to make it stand out
-        ctx.strokeStyle = 'white';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        if (trackLength > 0) {
+            // Normalize track direction
+            const trackUnitX = trackDx / trackLength;
+            const trackUnitY = trackDy / trackLength;
+            
+            // Calculate perpendicular direction (rotate 90 degrees)
+            const perpX = -trackUnitY;
+            const perpY = trackUnitX;
+            
+            // Draw white finish line perpendicular to track
+            const lineLength = 20;
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(startX + perpX * lineLength, startY + perpY * lineLength);
+            ctx.lineTo(startX - perpX * lineLength, startY - perpY * lineLength);
+            ctx.stroke();
+        }
+    }
+    
+    // Start the moving dot animation
+    startTrackAnimation(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale, offsetX, offsetY, width, height);
+}
+
+// Animation function for moving dot on track
+function startTrackAnimation(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale, offsetX, offsetY, width, height) {
+    if (!coordinates || coordinates.length < 2) return;
+    
+    const ctx = canvas.getContext('2d');
+    let currentIndex = 0;
+    let progress = 0;
+    
+    // Get track type and set lap time (in seconds)
+    const trackType = canvas.getAttribute('data-track');
+    const lapTimes = {
+        'mosport': 30,      // 30 seconds
+        'calabogie': 30,    // 30 seconds
+        'smp-long': 30,     // 30 seconds
+        'smp-pro': 30       // 30 seconds
+    };
+    
+    const lapTimeSeconds = lapTimes[trackType] || 30; // Default to 30 seconds
+    const totalCoordinates = coordinates.length;
+    const uniformSpeed = 1 / (lapTimeSeconds * 60 / totalCoordinates); // Uniform speed for desired lap time
+    const dotRadius = 5;
+    
+    console.log(`${trackType}: Lap time ${lapTimeSeconds}s, ${totalCoordinates} coordinates, speed: ${uniformSpeed.toFixed(6)}`);
+    
+    // Store animation ID for cleanup
+    canvas.animationId = null;
+    
+    function animate() {
+        // Clear previous dot by redrawing the track
+        redrawTrack(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale, offsetX, offsetY, width, height);
+        
+        // Calculate current position along the path
+        if (currentIndex < coordinates.length - 1) {
+            const currentCoord = coordinates[currentIndex];
+            const nextCoord = coordinates[currentIndex + 1];
+            
+            // Interpolate between current and next coordinate
+            const lng = currentCoord[0] + (nextCoord[0] - currentCoord[0]) * progress;
+            const lat = currentCoord[1] + (nextCoord[1] - currentCoord[1]) * progress;
+            
+            // Transform to canvas coordinates
+            const x = (lng - minLng) * scale + offsetX;
+            const y = height - ((lat - minLat) * scale + offsetY);
+            
+            // Draw animated dot
+            ctx.fillStyle = '#ff0000'; // Bright red
+            ctx.beginPath();
+            ctx.arc(x, y, dotRadius, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Add glow effect
+            ctx.shadowColor = '#ff0000';
+            ctx.shadowBlur = 10;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            
+            // Add white border
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Update progress with uniform speed
+            progress += uniformSpeed;
+            
+            if (progress >= 1) {
+                progress = 0;
+                currentIndex++;
+                
+                // Loop back to start when reaching the end
+                if (currentIndex >= coordinates.length - 1) {
+                    currentIndex = 0;
+                }
+            }
+        }
+        
+        // Continue animation
+        canvas.animationId = requestAnimationFrame(animate);
+    }
+    
+    // Start animation
+    animate();
+}
+
+// Function to stop animation for a specific canvas
+function stopTrackAnimation(canvas) {
+    if (canvas.animationId) {
+        cancelAnimationFrame(canvas.animationId);
+        canvas.animationId = null;
+    }
+}
+
+// Function to stop all track animations
+function stopAllTrackAnimations() {
+    const canvases = document.querySelectorAll('.track-canvas');
+    canvases.forEach(canvas => stopTrackAnimation(canvas));
+}
+
+// Calculate corner angles for each point on the track
+function calculateCornerAngles(coordinates) {
+    const angles = [];
+    
+    for (let i = 0; i < coordinates.length; i++) {
+        const prevIndex = (i - 1 + coordinates.length) % coordinates.length;
+        const nextIndex = (i + 1) % coordinates.length;
+        
+        const prev = coordinates[prevIndex];
+        const curr = coordinates[i];
+        const next = coordinates[nextIndex];
+        
+        // Calculate vectors
+        const v1 = [curr[0] - prev[0], curr[1] - prev[1]];
+        const v2 = [next[0] - curr[0], next[1] - curr[1]];
+        
+        // Calculate angle between vectors (in radians)
+        const dot = v1[0] * v2[0] + v1[1] * v2[1];
+        const mag1 = Math.sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
+        const mag2 = Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
+        
+        if (mag1 > 0 && mag2 > 0) {
+            const cosAngle = dot / (mag1 * mag2);
+            const angle = Math.acos(Math.max(-1, Math.min(1, cosAngle))); // Clamp to prevent NaN
+            angles.push(angle);
+        } else {
+            angles.push(0); // Straight line
+        }
+    }
+    
+    return angles;
+}
+
+// Calculate speed multiplier based on corner angle
+function calculateSpeedMultiplier(angle) {
+    // Convert angle to degrees for easier understanding
+    const degrees = angle * (180 / Math.PI);
+    
+    // More subtle speed characteristics:
+    // - Straight sections (170-180°): 100% speed
+    // - Fast corners (160-170°): 85% speed (gentle sweepers)
+    // - Medium-fast corners (140-160°): 75% speed
+    // - Medium corners (120-140°): 65% speed
+    // - Tight corners (100-120°): 55% speed
+    // - Hairpins (< 100°): 50% speed (minimum corner speed)
+    
+    if (degrees >= 170) {
+        return 1.0; // Full speed on straights
+    } else if (degrees >= 160) {
+        return 0.85; // Fast sweeping corners
+    } else if (degrees >= 140) {
+        return 0.75; // Medium-fast corners
+    } else if (degrees >= 120) {
+        return 0.65; // Medium corners
+    } else if (degrees >= 100) {
+        return 0.55; // Tight corners
+    } else {
+        return 0.50; // Minimum speed for hairpins
+    }
+}
+
+// Helper function to redraw just the track without the moving dot
+function redrawTrack(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale, offsetX, offsetY, width, height) {
+    const ctx = canvas.getContext('2d');
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw track path
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
+    ctx.beginPath();
+    coordinates.forEach((coord, index) => {
+        const x = (coord[0] - minLng) * scale + offsetX;
+        const y = height - ((coord[1] - minLat) * scale + offsetY);
+        
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+    ctx.stroke();
+    
+    // Draw start/finish line perpendicular to track
+    if (coordinates.length > 1) {
+        const startCoord = coordinates[0];
+        const nextCoord = coordinates[1];
+        
+        const startX = (startCoord[0] - minLng) * scale + offsetX;
+        const startY = height - ((startCoord[1] - minLat) * scale + offsetY);
+        const nextX = (nextCoord[0] - minLng) * scale + offsetX;
+        const nextY = height - ((nextCoord[1] - minLat) * scale + offsetY);
+        
+        // Calculate track direction
+        const trackDx = nextX - startX;
+        const trackDy = nextY - startY;
+        const trackLength = Math.sqrt(trackDx * trackDx + trackDy * trackDy);
+        
+        if (trackLength > 0) {
+            // Normalize track direction
+            const trackUnitX = trackDx / trackLength;
+            const trackUnitY = trackDy / trackLength;
+            
+            // Calculate perpendicular direction (rotate 90 degrees)
+            const perpX = -trackUnitY;
+            const perpY = trackUnitX;
+            
+            // Draw white finish line perpendicular to track
+            const lineLength = 20;
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(startX + perpX * lineLength, startY + perpY * lineLength);
+            ctx.lineTo(startX - perpX * lineLength, startY - perpY * lineLength);
+            ctx.stroke();
+        }
     }
 }

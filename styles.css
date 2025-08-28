@@ -1144,7 +1144,7 @@ section h2 {
 }
 
 .car-specs {
-    margin: 1.5rem 0;
+    margin: 0 0 1.5rem 0;
 }
 
 .spec-item {
@@ -1170,6 +1170,10 @@ section h2 {
 .spec-label {
     font-weight: 600;
     color: var(--accent-color);
+}
+
+.car-gallery {
+    margin-top: 4rem;
 }
 
 .car-gallery img {
@@ -1212,16 +1216,19 @@ section h2 {
 }
 
 .upcoming-races:only-child {
-    max-width: 600px;
+    max-width: 1000px;
     width: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 .race-item, .result-item {
     background: white;
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: 10px;
     margin-bottom: 1rem;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
 }
 
 .race-date, .result-date {
@@ -1232,7 +1239,9 @@ section h2 {
 
 .race-location, .result-location {
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+    word-wrap: break-word;
 }
 
 .race-status, .result-position {
@@ -1390,12 +1399,12 @@ section h2 {
 
 /* Sponsors Section */
 .sponsors-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 180px);
+    row-gap: 2rem;
+    column-gap: 2rem;
     margin-top: 2rem;
+    justify-content: center;
 }
 
 .sponsor-item {
@@ -1799,8 +1808,12 @@ section h2 {
         min-width: 200px;
     }
 
-    .drivers-grid, .crew-grid, .gallery-grid, .merch-grid, .sponsors-grid {
+    .drivers-grid, .crew-grid, .gallery-grid, .merch-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .sponsors-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
 
