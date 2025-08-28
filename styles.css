@@ -1232,6 +1232,37 @@ section h2 {
     line-height: 1.6;
 }
 
+/* Upcoming races specific styling */
+.upcoming-races .race-item {
+    background: #1a1a1a; /* Dark grey background (matches menu) */
+    color: white !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr auto;
+    align-items: center;
+    gap: 1rem;
+}
+
+.upcoming-races .race-item * {
+    color: white !important;
+}
+
+.upcoming-races .race-item:hover {
+    background: white;
+    color: #1a1a1a !important;
+}
+
+.upcoming-races .race-item:hover * {
+    color: #1a1a1a !important;
+}
+
+.upcoming-races .race-item:hover .race-status.upcoming {
+    background: white;
+    color: #1a1a1a !important;
+}
+
 .race-date, .result-date {
     color: var(--accent-color);
     font-weight: 600;
@@ -1254,8 +1285,8 @@ section h2 {
 }
 
 .race-status.upcoming {
-    background: #e3f2fd;
-    color: #1976d2;
+    background: black;
+    color: white;
 }
 
 .race-status.completed {
@@ -1713,7 +1744,7 @@ section h2 {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1824,12 +1855,19 @@ section h2 {
         min-width: 200px;
     }
 
-    .drivers-grid, .crew-grid, .gallery-grid, .merch-grid {
+    .gallery-grid, .merch-grid {
         grid-template-columns: 1fr;
     }
     
     .sponsors-grid {
         grid-template-columns: repeat(2, 180px);
+    }
+}
+
+/* Mobile and small tablets/foldables - single column for driver/crew cards */
+@media (max-width: 768px) {
+    .drivers-grid, .crew-grid {
+        grid-template-columns: 1fr;
     }
     
     /* Reset desktop centering for mobile */

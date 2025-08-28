@@ -203,14 +203,16 @@ function loadDefaultData() {
                 date: "2025-09-26T13:00:00",
                 location: "Shannonville Motorsports Park",
                 event: "Enduro Elite Race 8",
-                status: "upcoming"
+                status: "upcoming",
+                link: "https://enduroelite.ca/schedule"
             },
             {
                 id: 2,
                 date: "2025-11-15T12:00:00",
                 location: "Ozarks International Raceway",
                 event: "NASA 25hrs of Ozarks",
-                status: "upcoming"
+                status: "upcoming",
+                link: "https://drivenasa.com/25-hour/"
             }
         ],
         gallery: [],
@@ -697,12 +699,12 @@ function renderSchedule() {
     if (upcomingRaces) {
         const upcoming = websiteData.schedule.filter(race => race.status === 'upcoming');
         upcomingRaces.innerHTML = upcoming.map(race => `
-            <div class="race-item">
+            <a href="${race.link}" target="_blank" rel="noopener noreferrer" class="race-item">
                 <div class="race-date">${formatDate(race.date)}</div>
                 <div class="race-location">${race.location}</div>
                 <div class="race-event">${race.event}</div>
                 <span class="race-status ${race.status}">Upcoming</span>
-            </div>
+            </a>
         `).join('');
     }
     
@@ -1673,10 +1675,10 @@ function startTrackAnimation(canvas, coordinates, minLat, minLng, maxLat, maxLng
     
     // Define lap times for each track (in seconds)
     const lapTimes = {
-        'mosport': 30,      // 30 seconds
-        'calabogie': 30,    // 30 seconds
-        'smp-long': 30,     // 30 seconds
-        'smp-pro': 30       // 30 seconds
+        'mosport': 95,      // 1:35
+        'calabogie': 145,   // 2:25
+        'smp-long': 118,    // 1:58
+        'smp-pro': 98       // 1:38
     };
     
     const lapTimeSeconds = lapTimes[trackType] || 30;
