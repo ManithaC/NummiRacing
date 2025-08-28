@@ -1678,7 +1678,7 @@ function startTrackAnimation(canvas, coordinates, minLat, minLng, maxLat, maxLng
         'mosport': 95,      // 1:35
         'calabogie': 145,   // 2:25
         'smp-long': 118,    // 1:58
-        'smp-pro': 98       // 1:38
+                            'smp-pro': 75       // 1:15
     };
     
     const lapTimeSeconds = lapTimes[trackType] || 30;
