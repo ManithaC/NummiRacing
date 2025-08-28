@@ -703,7 +703,7 @@ function renderSchedule() {
                 <div class="race-date">${formatDate(race.date)}</div>
                 <div class="race-location">${race.location}</div>
                 <div class="race-event">${race.event}</div>
-                <span class="race-status ${race.status}">Upcoming</span>
+
             </a>
         `).join('');
     }

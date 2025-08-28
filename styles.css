@@ -1258,10 +1258,7 @@ section h2 {
     color: #1a1a1a !important;
 }
 
-.upcoming-races .race-item:hover .race-status.upcoming {
-    background: white;
-    color: #1a1a1a !important;
-}
+
 
 .race-date, .result-date {
     color: var(--accent-color);
@@ -1284,10 +1281,7 @@ section h2 {
     font-weight: 500;
 }
 
-.race-status.upcoming {
-    background: black;
-    color: white;
-}
+
 
 .race-status.completed {
     background: #e8f5e8;
