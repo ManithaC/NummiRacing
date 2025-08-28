@@ -109,7 +109,7 @@ function loadDefaultData() {
             {
                 id: 1,
                 name: "Vinh Pham",
-                role: "Driver",
+                role: "Team Principal, Driver",
                 image: "images/vinh.jpg",
                 bio: "Over 30 years of motorsports experience from karts to international FIA eRallys, Targa Newfoundland, autocross, time attacks and Formula SAE, Vinh is an academically trained engineer (University of Toronto), father of two boys and leader at Toyota Canada Inc. With over 20 years of automotive industry experience from manufacturing, quality, government relations, PR & public speaking, dealership liaison, product planning, marketing and inventory management, Vinh's breadth in the auto industry helps nummi racing operate with precision. Vinh daily drives a GR Supra & Toyota Land Cruiser.",
                 instagram: "vphamracing"
@@ -218,15 +218,15 @@ function loadDefaultData() {
         sponsors: [
             {
                 id: 1,
-                name: "JRP",
-                logo: "images/jrp.png",
-                website: "https://www.jrponline.com/"
-            },
-            {
-                id: 2,
                 name: "BSQUARED",
                 logo: "images/bsquared.png",
                 website: "https://b-squared.io"
+            },
+            {
+                id: 2,
+                name: "BuildRegistry",
+                logo: "images/buildregistry_web.png",
+                website: "https://www.buildregistry.co"
             },
             {
                 id: 3,
@@ -237,7 +237,7 @@ function loadDefaultData() {
             {
                 id: 4,
                 name: "VP Engineering & Electrical",
-                logo: "images/vpsponsor_web.png",
+                logo: "images/vpsponsor.png",
                 website: "https://www.instagram.com/vphamracing/"
             },
             {
@@ -248,15 +248,15 @@ function loadDefaultData() {
             },
             {
                 id: 6,
-                name: "OCTANE VISION",
-                logo: "images/octane.png",
-                website: "https://www.youtube.com/@Octane.Vision"
+                name: "JRP",
+                logo: "images/jrp.png",
+                website: "https://www.jrponline.com/"
             },
             {
                 id: 7,
-                name: "BuildRegistry",
-                logo: "images/buildregistry_web.png",
-                website: "https://www.buildregistry.co"
+                name: "OCTANE VISION",
+                logo: "images/octane.png",
+                website: "https://www.youtube.com/@Octane.Vision"
             }
         ],
         socialLinks: {
@@ -1601,7 +1601,7 @@ function drawTrackOnCanvas(canvas, coordinates) {
     const offsetY = (height - latRange * scale) / 2;
     
     // Draw track path
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = '#808080'; // 50% grey
     ctx.lineWidth = 4;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -1646,7 +1646,7 @@ function drawTrackOnCanvas(canvas, coordinates) {
             
             // Draw white finish line perpendicular to track
             const lineLength = 20;
-            ctx.strokeStyle = 'white';
+            ctx.strokeStyle = '#808080'; // 50% grey
             ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(startX + perpX * lineLength, startY + perpY * lineLength);
@@ -1663,12 +1663,15 @@ function drawTrackOnCanvas(canvas, coordinates) {
 function startTrackAnimation(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale, offsetX, offsetY, width, height) {
     if (!coordinates || coordinates.length < 2) return;
     
-    const ctx = canvas.getContext('2d');
-    let currentIndex = 0;
-    let progress = 0;
+    // Stop any existing animation
+    if (canvas.animationId) {
+        cancelAnimationFrame(canvas.animationId);
+    }
     
-    // Get track type and set lap time (in seconds)
-    const trackType = canvas.getAttribute('data-track');
+    // Get track type from canvas data attributes
+    const trackType = canvas.getAttribute('data-track') || 'unknown';
+    
+    // Define lap times for each track (in seconds)
     const lapTimes = {
         'mosport': 30,      // 30 seconds
         'calabogie': 30,    // 30 seconds
@@ -1676,70 +1679,122 @@ function startTrackAnimation(canvas, coordinates, minLat, minLng, maxLat, maxLng
         'smp-pro': 30       // 30 seconds
     };
     
-    const lapTimeSeconds = lapTimes[trackType] || 30; // Default to 30 seconds
-    const totalCoordinates = coordinates.length;
-    const uniformSpeed = 1 / (lapTimeSeconds * 60 / totalCoordinates); // Uniform speed for desired lap time
+    const lapTimeSeconds = lapTimes[trackType] || 30;
     const dotRadius = 5;
     
-    console.log(`${trackType}: Lap time ${lapTimeSeconds}s, ${totalCoordinates} coordinates, speed: ${uniformSpeed.toFixed(6)}`);
+    // Calculate total track distance in pixels and segment distances
+    let totalDistance = 0;
+    const segmentDistances = [];
+    const canvasCoordinates = [];
     
-    // Store animation ID for cleanup
-    canvas.animationId = null;
+    // Convert all coordinates to canvas coordinates and calculate distances
+    for (let i = 0; i < coordinates.length; i++) {
+        const coord = coordinates[i];
+        const canvasX = (coord[0] - minLng) * scale + offsetX;
+        const canvasY = height - ((coord[1] - minLat) * scale + offsetY);
+        canvasCoordinates.push({ x: canvasX, y: canvasY });
+        
+        if (i > 0) {
+            const prevCoord = canvasCoordinates[i - 1];
+            const distance = Math.sqrt(
+                Math.pow(canvasX - prevCoord.x, 2) + 
+                Math.pow(canvasY - prevCoord.y, 2)
+            );
+            segmentDistances.push(distance);
+            totalDistance += distance;
+        }
+    }
     
-    function animate() {
+    // Add distance from last point back to first to complete the loop
+    const lastToFirst = Math.sqrt(
+        Math.pow(canvasCoordinates[0].x - canvasCoordinates[canvasCoordinates.length - 1].x, 2) + 
+        Math.pow(canvasCoordinates[0].y - canvasCoordinates[canvasCoordinates.length - 1].y, 2)
+    );
+    segmentDistances.push(lastToFirst);
+    totalDistance += lastToFirst;
+    
+    // Speed in pixels per frame (60 fps) - make it slower for smoother animation
+    const pixelsPerFrame = totalDistance / (lapTimeSeconds * 60);
+    
+    console.log(`${trackType}: Lap time ${lapTimeSeconds}s, total distance: ${totalDistance.toFixed(2)}px, speed: ${pixelsPerFrame.toFixed(2)}px/frame`);
+    
+    let currentDistance = 0;
+    let lastTime = performance.now();
+    
+    function animate(currentTime) {
+        // Calculate time-based movement for smooth animation
+        const deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+        
+        // Speed in pixels per millisecond
+        const pixelsPerMs = totalDistance / (lapTimeSeconds * 1000);
+        const distanceIncrement = pixelsPerMs * deltaTime;
+        
         // Clear previous dot by redrawing the track
         redrawTrack(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale, offsetX, offsetY, width, height);
         
-        // Calculate current position along the path
-        if (currentIndex < coordinates.length - 1) {
-            const currentCoord = coordinates[currentIndex];
-            const nextCoord = coordinates[currentIndex + 1];
-            
-            // Interpolate between current and next coordinate
-            const lng = currentCoord[0] + (nextCoord[0] - currentCoord[0]) * progress;
-            const lat = currentCoord[1] + (nextCoord[1] - currentCoord[1]) * progress;
-            
-            // Transform to canvas coordinates
-            const x = (lng - minLng) * scale + offsetX;
-            const y = height - ((lat - minLat) * scale + offsetY);
-            
-            // Draw animated dot
-            ctx.fillStyle = '#ff0000'; // Bright red
-            ctx.beginPath();
-            ctx.arc(x, y, dotRadius, 0, 2 * Math.PI);
-            ctx.fill();
-            
-            // Add glow effect
-            ctx.shadowColor = '#ff0000';
-            ctx.shadowBlur = 10;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            
-            // Add white border
-            ctx.strokeStyle = 'white';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            
-            // Update progress with uniform speed
-            progress += uniformSpeed;
-            
-            if (progress >= 1) {
-                progress = 0;
-                currentIndex++;
-                
-                // Loop back to start when reaching the end
-                if (currentIndex >= coordinates.length - 1) {
-                    currentIndex = 0;
-                }
-            }
+        // Find current position based on distance traveled
+        let accumulatedDistance = 0;
+        let currentSegment = 0;
+        
+        // Find which segment we're in
+        while (currentSegment < segmentDistances.length && 
+               accumulatedDistance + segmentDistances[currentSegment] < currentDistance) {
+            accumulatedDistance += segmentDistances[currentSegment];
+            currentSegment++;
+        }
+        
+        // Handle wrap-around
+        if (currentSegment >= segmentDistances.length) {
+            currentSegment = 0;
+            currentDistance = 0;
+            accumulatedDistance = 0;
+        }
+        
+        // Calculate position within current segment
+        const segmentProgress = segmentDistances[currentSegment] > 0 ? 
+            (currentDistance - accumulatedDistance) / segmentDistances[currentSegment] : 0;
+        
+        // Get current and next canvas coordinates
+        const currentCoord = canvasCoordinates[currentSegment];
+        const nextCoord = canvasCoordinates[(currentSegment + 1) % canvasCoordinates.length];
+        
+        // Interpolate position with sub-pixel precision
+        const x = currentCoord.x + (nextCoord.x - currentCoord.x) * segmentProgress;
+        const y = currentCoord.y + (nextCoord.y - currentCoord.y) * segmentProgress;
+        
+        // Draw animated dot
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ff0000'; // Bright red
+        ctx.beginPath();
+        ctx.arc(x, y, dotRadius, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Add red glow effect
+        ctx.shadowColor = '#ff0000';
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        
+        // Add white border
+        ctx.strokeStyle = '#808080'; // 50% grey
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Update distance traveled based on actual time elapsed
+        currentDistance += distanceIncrement;
+        
+        // Reset when completing a lap
+        if (currentDistance >= totalDistance) {
+            currentDistance = 0;
         }
         
         // Continue animation
         canvas.animationId = requestAnimationFrame(animate);
     }
     
-    // Start animation
-    animate();
+    // Start the animation
+    animate(performance.now());
 }
 
 // Function to stop animation for a specific canvas
@@ -1825,7 +1880,7 @@ function redrawTrack(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale,
     ctx.clearRect(0, 0, width, height);
     
     // Draw track path
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = '#808080'; // 50% grey
     ctx.lineWidth = 4;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -1869,7 +1924,7 @@ function redrawTrack(canvas, coordinates, minLat, minLng, maxLat, maxLng, scale,
             
             // Draw white finish line perpendicular to track
             const lineLength = 20;
-            ctx.strokeStyle = 'white';
+            ctx.strokeStyle = '#808080'; // 50% grey
             ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(startX + perpX * lineLength, startY + perpY * lineLength);

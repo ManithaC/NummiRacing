@@ -754,8 +754,7 @@ section h2 {
 }
 
 .race-position.p2 {
-    color: #C0C0C0; /* Silver */
-    text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+    color: white; /* White (previously P4+ color) */
 }
 
 .race-position.p3 {
@@ -768,7 +767,8 @@ section h2 {
 .race-position.p6,
 .race-position.p7,
 .race-position.p12 {
-    color: white;
+    color: #C0C0C0; /* Silver (previously P2 color) */
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
 }
 
 .race-position.dnf {
@@ -1145,6 +1145,7 @@ section h2 {
 
 .car-specs {
     margin: 0 0 1.5rem 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .spec-item {
@@ -1405,6 +1406,21 @@ section h2 {
     column-gap: 2rem;
     margin-top: 2rem;
     justify-content: center;
+}
+
+/* Center the last 3 items in the bottom row by shifting right by half a sponsor width */
+.sponsor-item:nth-child(5) {
+    margin-left: calc(90px + 1rem); /* Half sponsor width (90px) + half gap (1rem) */
+}
+
+.sponsor-item:nth-child(6) {
+    grid-column: 2;
+    margin-left: calc(90px + 1rem); /* Half sponsor width (90px) + half gap (1rem) */
+}
+
+.sponsor-item:nth-child(7) {
+    grid-column: 3;
+    margin-left: calc(90px + 1rem); /* Half sponsor width (90px) + half gap (1rem) */
 }
 
 .sponsor-item {
@@ -1814,6 +1830,21 @@ section h2 {
     
     .sponsors-grid {
         grid-template-columns: repeat(2, 180px);
+    }
+    
+    /* Reset desktop centering for mobile */
+    .sponsor-item:nth-child(5),
+    .sponsor-item:nth-child(6),
+    .sponsor-item:nth-child(7) {
+        grid-column: auto;
+        justify-self: auto;
+        margin-left: 0; /* Reset the margin for mobile */
+    }
+    
+    /* Center the last item in mobile (7th sponsor) */
+    .sponsor-item:nth-child(7) {
+        grid-column: 1 / 3;
+        justify-self: center;
     }
 
 
