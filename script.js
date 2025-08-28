@@ -178,7 +178,7 @@ function loadDefaultData() {
                 role: "Race Strategy",
                 image: "images/amando_web.jpg",
                 bio: "",
-                instagram: ""
+                instagram: "amandowidjaja"
             },
             {
                 id: 4,
