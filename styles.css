@@ -1432,7 +1432,7 @@ section h2 {
 /* Sponsors Section */
 .sponsors-grid {
     display: grid;
-    grid-template-columns: repeat(4, 180px);
+    grid-template-columns: repeat(4, 226px);
     row-gap: 2rem;
     column-gap: 2rem;
     margin-top: 2rem;
@@ -1441,22 +1441,48 @@ section h2 {
 
 /* Center the last 3 items in the bottom row by shifting right by half a sponsor width */
 .sponsor-item:nth-child(5) {
-    margin-left: calc(90px + 1rem); /* Half sponsor width (90px) + half gap (1rem) */
+    margin-left: calc(113px + 1rem); /* Half sponsor width (113px) + half gap (1rem) */
 }
 
 .sponsor-item:nth-child(6) {
     grid-column: 2;
-    margin-left: calc(90px + 1rem); /* Half sponsor width (90px) + half gap (1rem) */
+    margin-left: calc(113px + 1rem); /* Half sponsor width (113px) + half gap (1rem) */
 }
 
 .sponsor-item:nth-child(7) {
     grid-column: 3;
-    margin-left: calc(90px + 1rem); /* Half sponsor width (90px) + half gap (1rem) */
+    margin-left: calc(113px + 1rem); /* Half sponsor width (113px) + half gap (1rem) */
+}
+
+/* Tablet breakpoint - 3-3-1 layout */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .sponsors-grid {
+        grid-template-columns: repeat(3, 220px);
+    }
+    
+    /* Reset desktop centering for tablet */
+    .sponsor-item:nth-child(7) {
+        grid-column: auto;
+        justify-self: auto;
+    }
+    
+    /* Center the last item in tablet (7th sponsor) */
+    .sponsor-item:nth-child(7) {
+        grid-column: 2;
+        justify-self: center;
+    }
+    
+    /* Make sponsor items smaller on tablet */
+    .sponsor-item {
+        width: 220px;
+        height: 220px;
+        padding: 2rem;
+    }
 }
 
 .sponsor-item {
     background: #000000;
-    padding: 1.5rem;
+    padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
     text-decoration: none;
@@ -1465,8 +1491,8 @@ section h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 180px;
-    height: 180px;
+    width: 226px;
+    height: 226px;
     flex-shrink: 0;
 }
 
@@ -1860,14 +1886,7 @@ section h2 {
     }
     
     .sponsors-grid {
-        grid-template-columns: repeat(2, 180px);
-    }
-}
-
-/* Mobile and small tablets/foldables - single column for driver/crew cards */
-@media (max-width: 768px) {
-    .drivers-grid, .crew-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 220px);
     }
     
     /* Reset desktop centering for mobile */
@@ -1883,6 +1902,13 @@ section h2 {
     .sponsor-item:nth-child(7) {
         grid-column: 1 / 3;
         justify-self: center;
+    }
+}
+
+/* Mobile and small tablets/foldables - single column for driver/crew cards */
+@media (max-width: 768px) {
+    .drivers-grid, .crew-grid {
+        grid-template-columns: 1fr;
     }
 
 
