@@ -125,6 +125,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    overflow-x: hidden;
 }
 
 /* Typography */
@@ -1433,44 +1434,19 @@ section h2 {
     justify-content: center;
 }
 
-/* Center the last 3 items in the bottom row by shifting right by half a sponsor width */
-.sponsor-item:nth-child(5) {
-    margin-left: calc(113px + 1rem); /* Half sponsor width (113px) + half gap (1rem) */
-}
-
-.sponsor-item:nth-child(6) {
-    grid-column: 2;
-    margin-left: calc(113px + 1rem); /* Half sponsor width (113px) + half gap (1rem) */
-}
-
-.sponsor-item:nth-child(7) {
-    grid-column: 3;
-    margin-left: calc(113px + 1rem); /* Half sponsor width (113px) + half gap (1rem) */
-}
-
-/* Tablet breakpoint - 3-3-1 layout */
+/* Tablet breakpoint - 3-3-2 layout */
 @media (max-width: 1024px) and (min-width: 769px) {
     .sponsors-grid {
-        grid-template-columns: repeat(3, 220px);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
     }
     
-    /* Reset desktop centering for tablet */
-    .sponsor-item:nth-child(7) {
-        grid-column: auto;
-        justify-self: auto;
-    }
-    
-    /* Center the last item in tablet (7th sponsor) */
-    .sponsor-item:nth-child(7) {
-        grid-column: 2;
-        justify-self: center;
-    }
-    
-    /* Make sponsor items smaller on tablet */
+    /* Make sponsor items responsive on tablet */
     .sponsor-item {
-        width: 220px;
-        height: 220px;
-        padding: 2rem;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        padding: 1.5rem;
     }
 }
 
@@ -1880,22 +1856,17 @@ section h2 {
     }
     
     .sponsors-grid {
-        grid-template-columns: repeat(2, 220px);
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 100%;
+        overflow-x: hidden;
     }
     
-    /* Reset desktop centering for mobile */
-    .sponsor-item:nth-child(5),
-    .sponsor-item:nth-child(6),
-    .sponsor-item:nth-child(7) {
-        grid-column: auto;
-        justify-self: auto;
-        margin-left: 0; /* Reset the margin for mobile */
-    }
-    
-    /* Center the last item in mobile (7th sponsor) */
-    .sponsor-item:nth-child(7) {
-        grid-column: 1 / 3;
-        justify-self: center;
+    .sponsor-item {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        padding: 1.5rem;
     }
 }
 

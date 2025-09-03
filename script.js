@@ -259,6 +259,12 @@ function loadDefaultData() {
                 name: "OCTANE VISION",
                 logo: "images/octane.png",
                 website: "https://www.youtube.com/@Octane.Vision"
+            },
+            {
+                id: 8,
+                name: "Pixel Media",
+                logo: "images/Pixel.png",
+                website: "https://www.pixelmediacom.ca/"
             }
         ],
         socialLinks: {
